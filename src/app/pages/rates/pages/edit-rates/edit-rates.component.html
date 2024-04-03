@@ -1,0 +1,64 @@
+<div class="container mt-3">
+    <div style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
+        <h1 class="mb-4">Editar tarifa</h1>
+        <form [formGroup]="rateForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-12 col-md-6 mb-3">
+                    <label for="name" class="form-label asterisk">Tarifa</label>
+                    <input type="text" class="form-control" id="name" formControlName="name" required
+                        placeholder="Introduce la tarifa"
+                        [ngClass]="{'is-invalid': rateForm?.get('name')?.invalid && rateForm?.get('name')?.touched}">
+                    <div *ngIf="rateForm?.get('name')?.invalid && rateForm?.get('name')?.touched" class="text-danger">
+                        La tarifa es obligatoria
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <label for="price" class="form-label asterisk">Precio</label>
+                    <input type="number" class="form-control" id="price" formControlName="price" required
+                        placeholder="Introduce el precio (€)"
+                        [ngClass]="{'is-invalid': rateForm?.get('price')?.invalid && rateForm?.get('price')?.touched}">
+                    <div *ngIf="rateForm?.get('price')?.invalid && rateForm?.get('price')?.touched" class="text-danger">
+                        El precio es obligatorio
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-12 mb-3">
+                    <label for="description" class="form-label">Descripcion</label>
+                    <textarea type="text" class="form-control" id="description" formControlName="description" rows="3"
+                        placeholder="Introduce la description"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6 mb-3">
+                    <label for="durationUnit" class="form-label asterisk">Duracion</label>
+                    <select class="form-select" id="durationUnit" formControlName="durationUnit"
+                        [ngClass]="{'is-invalid': rateForm?.get('durationUnit')?.invalid && rateForm?.get('durationUnit')?.touched}">
+                        <option value="Month" selected>Meses</option>
+                        <option value="Day">Dias</option>
+                    </select>
+                    <div *ngIf="rateForm?.get('durationUnit')?.invalid && rateForm?.get('durationUnit')?.touched"
+                        class="text-danger">
+                        La duración es obligatoria
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <label for="duration" class="form-label asterisk">{{durationUnit === 'Month' ? 'Meses' :
+                        'Dias'}}</label>
+                    <input type="number" class="form-control" id="duration" formControlName="duration"
+                        placeholder="Duración"
+                        [ngClass]="{'is-invalid': rateForm?.get('duration')?.invalid && rateForm?.get('duration')?.touched}">
+                    <div *ngIf="rateForm?.get('duration')?.invalid && rateForm?.get('duration')?.touched"
+                        class="text-danger">
+                        La duración es obligatoria
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary float-end">Crear tarifa</button>
+        </form>
+    </div>
+</div>
+<div *ngIf="alertMessage" class="alert alert-{{ alertType }}" role="alert"
+    style="width: 90%; position: fixed; top: 30px; left: 50%; transform: translateX(-50%); z-index: 9999;">
+    {{ alertMessage }}
+</div>
