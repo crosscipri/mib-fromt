@@ -1,0 +1,46 @@
+<div class="modal-container">
+    <div class="title">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Asignar tarifa</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="content">
+        <form [formGroup]="assignRateForm">
+            <ng-container *ngIf="rates$ | async as rates">
+                <div class="col-12  mb-3">
+                    <label for="rateId" class="form-label asterisk">Tarifa</label>
+                    <select class="form-select" id="rateId" formControlName="rateId"
+                        [ngClass]="{'is-invalid': assignRateForm?.get('rateId')?.invalid && assignRateForm?.get('rateId')?.touched}">
+                        <option value="" selected>Selecciona una tarifa</option>
+                        <option *ngFor="let rate of rates.data" [value]="rate.id">{{ rate.name }}
+                        </option>
+                    </select>
+                    <div *ngIf="assignRateForm?.get('trainer')?.invalid && assignRateForm?.get('trainer')?.touched"
+                        class="text-danger">
+                        La tarifa es obligatoria
+                    </div>
+                </div>
+            </ng-container>
+            <div class=" col-12 mb-3">
+                <label for="startDate" class="form-label asterisk">Fecha de inicio</label>
+                <input type="date" class="form-control" id="startDate" formControlName="startDate"
+                    [ngClass]="{'is-invalid': assignRateForm?.get('startDate')?.invalid && assignRateForm?.get('startDate')?.touched}">
+                <div *ngIf="assignRateForm?.get('startDate')?.invalid && assignRateForm?.get('startDate')?.touched"
+                    class="text-danger">
+                    Fecha de inicio obligatoria
+                </div>
+            </div>
+            <div class="col-12 mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="paid" formControlName="paid">
+                <label class="form-check-label" for="paid">Pagado</label>
+            </div>
+            <div class="col-12 mb-3">
+                <label for="paymentDate" class="form-label">Fecha de pago</label>
+                <input type="date" class="form-control" id="paymentDate" formControlName="paymentDate">
+            </div>
+        </form>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary">Cerrar</button>
+            <button type="button" class="btn btn-primary" (click)="onSubmit()">Asignar tarifa</button>
+        </div>
+    </div>
+</div>

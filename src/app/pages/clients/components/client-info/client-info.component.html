@@ -1,0 +1,46 @@
+<div class="container overflow-auto" style="max-height: 90vh;">
+    <div class="row mt-4" *ngIf="client$ | async as client">
+        <div *ngIf="client.data.pendingPayments" class="alert alert-warning d-flex flex-column"
+            style="width: 94%; margin: 12px; margin-right: 0;" role="alert">
+            <span> Este cliente tiene pagos pendientes</span>
+            <a [routerLink]="['/clients', client.data.client.id, 'historic']" class="alert-link">Ver histórico de
+                tarifas</a>
+        </div>
+        <div class="col-12 col-md-6 mb-4 ">
+            <div class="card bg-light p-3 rounded">
+                <h2 class="mt-2 text-primary"><i class="bi bi-person-fill"></i> Información del Cliente</h2>
+                <p><i class="bi bi-card-list"></i> <strong> Nombre:</strong> {{client.data.client.name}}
+                    {{client.data.client.firstLastName}} {{client.data.client.secondLastName}}</p>
+                <p><i class="bi bi-envelope-fill"></i> <strong> Email:</strong> {{client.data.client.email}}</p>
+                <p><i class="bi bi-telephone-fill"></i> <strong> Tel:</strong> {{client.data.client.phoneNumber}}
+                </p>
+                <p><i class="bi bi-calendar3"></i> <strong> Fecha de Nacimiento:</strong>
+                    {{client.data.client.birthDate | date: 'dd/MM/yyyy'}}</p>
+                <p><i class="bi bi-calendar-check-fill"></i> <strong> Fecha de Registro:</strong>
+                    {{client.data.client.registrationDate | date: 'dd/MM/yyyy'}}</p>
+                <p><i class="bi bi-person-lines-fill"></i> <strong> Entrenador:</strong>
+                    {{client.data.client.trainer?.alias}}</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 mb-4" *ngIf="client.data.rate">
+            <div class="card bg-light p-3 rounded">
+                <h2 class="mt-2 text-success"><i class="bi bi-cash-stack"></i> Tarifa activa</h2>
+                <p><i class="bi bi-tags-fill"></i> {{client.data.rate.name}}</p>
+                <p><i class="bi bi-info-circle-fill"></i>
+                    {{client.data.rate.description}}
+                </p>
+                <p><i class="bi bi-cash-coin"></i> <strong> Precio:</strong> {{client.data.rate.price}}€</p>
+                <p><i class="bi bi-clock-fill"></i> <strong> Duración:</strong> {{client.data.rate.duration}}
+                    {{client.data.rate?.durationUnit == 'Month' ? 'Mes' : client.data.rate?.durationUnit == 'Day' ?
+                    'Día' : client.data.rate?.durationUnit}}</p>
+                <p *ngIf="client.data.startDate"><i class="bi bi-calendar-fill"></i> <strong> Fecha inicio:</strong>
+                    {{client.data.startDate | date:
+                    'dd/MM/yyyy'}}
+                </p>
+                <p><i class="bi bi-calendar-x-fill"></i> <strong> Fecha fin:</strong> {{client.data.endDate | date:
+                    'dd/MM/yyyy'}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

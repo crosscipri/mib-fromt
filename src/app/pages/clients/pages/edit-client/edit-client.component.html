@@ -1,0 +1,81 @@
+<div class="container mt-3">
+    <div style="height: 85vh; overflow-y: auto; overflow-x: hidden;">
+        <h1 class="mb-4">Editar cliente</h1>
+        <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-12 col-md-6 mb-3">
+                    <label for="name" class="form-label asterisk">Nombre</label>
+                    <input type="text" class="form-control" id="name" formControlName="name" required
+                        placeholder="Introduce el nombre"
+                        [ngClass]="{'is-invalid': clientForm?.get('name')?.invalid && clientForm?.get('name')?.touched}">
+                    <div *ngIf="clientForm?.get('name')?.invalid && clientForm?.get('name')?.touched"
+                        class="text-danger">
+                        El nombre es obligatorio
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6 mb-3">
+                    <label for="firstLastName" class="form-label asterisk">Primer apellido</label>
+                    <input type="text" class="form-control" id="firstLastName" formControlName="firstLastName" required
+                        placeholder="Introduce el primer apellido"
+                        [ngClass]="{'is-invalid': clientForm?.get('firstLastName')?.invalid && clientForm?.get('firstLastName')?.touched}">
+                    <div *ngIf="clientForm?.get('firstLastName')?.invalid && clientForm?.get('firstLastName')?.touched"
+                        class="text-danger">
+                        El primer apellido es obligatorio
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <label for="secondLastName" class="form-label">Segundo apellido</label>
+                    <input type="text" class="form-control" id="secondLastName" formControlName="secondLastName"
+                        placeholder="Introduce el segundo apellido">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6 mb-3">
+                    <label for="email" class="form-label asterisk">Email</label>
+                    <input type="email" class="form-control" id="email" formControlName="email" required
+                        placeholder="Introduce el email"
+                        [ngClass]="{'is-invalid': clientForm?.get('email')?.invalid && clientForm?.get('email')?.touched}">
+                    <div *ngIf="clientForm?.get('email')?.invalid && clientForm?.get('email')?.touched"
+                        class="text-danger">
+                        El email es obligatorio
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-3">
+                    <label for="phoneNumber" class="form-label">Número de teléfono</label>
+                    <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber"
+                        placeholder="Introduce el número de teléfono"
+                        [ngClass]="{'is-invalid': clientForm?.get('phoneNumber')?.invalid && clientForm?.get('phoneNumber')?.touched}">
+                    <div *ngIf="clientForm?.get('phoneNumber')?.invalid && clientForm?.get('phoneNumber')?.touched"
+                        class="text-danger">
+                        Formato incorrecto
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6 mb-3">
+                    <label for="birthDate" class="form-label">Fecha de nacimiento</label>
+                    <input type="date" class="form-control" id="birthDate" formControlName="birthDate"
+                        placeholder="Introduce la fecha de nacimiento">
+
+                </div>
+                <ng-container *ngIf="trainers$ | async as trainers">
+                    <div class="col-12 col-md-6 mb-3">
+                        <label for="trainer" class="form-label">Entrenador</label>
+                        <select class="form-select" id="trainer" formControlName="trainer">
+                            <option value="" selected>Selecciona un entrenador</option>
+                            <option *ngFor="let trainer of trainers.data" [value]="trainer.id">{{ trainer.alias }}
+                            </option>
+                        </select>
+                    </div>
+                </ng-container>
+            </div>
+            <button type="submit" class="btn btn-primary float-end">Editar</button>
+        </form>
+    </div>
+</div>
+<div *ngIf="alertMessage" class="alert alert-{{ alertType }}" role="alert"
+    style="width: 90%; position: fixed; top: 30px; left: 50%; transform: translateX(-50%); z-index: 9999;">
+    {{ alertMessage }}
+</div>

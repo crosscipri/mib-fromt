@@ -1,0 +1,81 @@
+<div *ngIf="clientData" class="card">
+    <div class="card__container">
+        <div class="card__container__client">
+            <div class="card__container__client__info">
+                <span class="card__container__client__info__name">{{clientData.client.name}}
+                    {{clientData.client.firstLastName}}
+                    {{clientData.client.secondLastName}}</span>
+            </div>
+            <div class="card__container__client__status">
+                <span [ngClass]="{'pending-payments': clientData.pendingPayments}">
+                    {{clientData.pendingPayments ? 'Pagos pend.' : ''}}
+                </span>
+            </div>
+
+        </div>
+        <div class="card__container__rate">
+            <span class="card__container__rate__title" [ngClass]="{'no-rate': !clientData?.rate?.name}">
+                {{clientData.rate?.name ?? 'Sin tarifa asignada'}}
+            </span>
+            <div class="card__container__rate__data">
+                <span *ngIf="clientData.client.trainer; else emptyTrainer"
+                    class="card__container__rate__data__coach pt-2">
+                    <i class="bi bi-person-fill"></i> {{clientData.client.trainer.alias}}
+                </span>
+                <span class="card__container__rate__data__date pt-2" *ngIf="clientData.endDate">
+                    <i class="bi bi-calendar-x"></i> {{clientData.endDate | date: 'dd/MM/yyyy'}}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="card__actions">
+        <div data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-three-dots-vertical"></i>
+        </div>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" [routerLink]="['/clients', clientData.client.id]">Info Cliente</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/clients', clientData.client.id, 'edit']">Editar Cliente</a>
+            </li>
+            <li><a class="dropdown-item">Asignar
+                    tarifa</a></li>
+
+            <li><a class="dropdown-item" href="#">Renovar tarifa</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/clients', clientData.client.id, 'historic']">Histórico
+                    tarifas</a></li>
+            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">Borrar cliente</a></li>
+        </ul>
+    </div>
+
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Borrar cliente</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que quieres borrar al cliente {{clientData?.client?.name}}
+                    {{clientData?.client?.firstLastName}}
+                    {{clientData?.client?.secondLastName}}?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        (click)="deleteClient.emit(clientData?.client?.id || 0)">Borrar cliente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #emptyTrainer>
+    <span class="card__container__rate__data__coach__empty pt-2">
+        <i class="bi bi-person-fill"></i> No asignado</span>
+</ng-template>
+
+<div *ngIf="alertMessage" class="alert alert-{{ alertType }}" role="alert"
+    style="width: 90%; position: fixed; top: 30px; left: 50%; transform: translateX(-50%); z-index: 9999;">
+    {{ alertMessage }}
+</div>
