@@ -1,40 +1,32 @@
-import { Component } from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from "@angular/forms";
-import { TrainersResponse } from "../../../../interfaces/trainer.interface";
-import { EMPTY, Observable, catchError, first, tap } from "rxjs";
-import { ClientsService } from "../../services/clients.service";
-import { CommonModule } from "@angular/common";
-import { ClientRequestDto } from "../../../../interfaces/clients.interface";
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TrainersResponse } from '../../../../interfaces/trainer.interface';
+import { EMPTY, Observable, catchError, first, tap } from 'rxjs';
+import { ClientsService } from '../../services/clients.service';
+import { ClientRequestDto } from '../../../../interfaces/clients.interface';
 
 @Component({
-  selector: "app-create-clients",
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: "./create-clients.component.html",
-  styleUrl: "./create-clients.component.scss",
+  selector: 'app-create-clients',
+  templateUrl: './create-clients.component.html',
+  styleUrl: './create-clients.component.scss',
 })
 export class CreateClientsComponent {
   trainers$: Observable<TrainersResponse> = this.clientsService.getTrainers();
-  trainers: TrainersResponse["data"] = [];
+  trainers: TrainersResponse['data'] = [];
   clientForm: FormGroup;
   alertMessage: string | null = null;
-  alertType: string = "success";
+  alertType: string = 'success';
 
   constructor(
     private fb: FormBuilder,
-    private clientsService: ClientsService
+    private clientsService: ClientsService,
   ) {
     this.clientForm = this.fb.group({
       name: [null, Validators.required],
       firstLastName: [null, Validators.required],
       secondLastName: [null],
       email: [null, [Validators.email, Validators.required]],
-      phoneNumber: [null, Validators.pattern("^\\d{9}$")],
+      phoneNumber: [null, Validators.pattern('^\\d{9}$')],
       birthDate: [null],
       trainer: [null, Validators.required],
     });
@@ -64,10 +56,10 @@ export class CreateClientsComponent {
   }
 
   private prepareFormData() {
-    const trainerId = this.clientForm?.get("trainer")?.value;
+    const trainerId = this.clientForm?.get('trainer')?.value;
 
     const selectedTrainer = this.trainers?.find(
-      (trainer) => Number(trainer.id) === Number(trainerId)
+      (trainer) => Number(trainer.id) === Number(trainerId),
     );
 
     return {
@@ -85,22 +77,22 @@ export class CreateClientsComponent {
         catchError((error) => {
           this.showErrorMessage(error.error.message);
           return EMPTY;
-        })
+        }),
       )
       .subscribe();
   }
 
-  private showSuccessMessage(message: string = "Cliente creado correctamente") {
+  private showSuccessMessage(message: string = 'Cliente creado correctamente') {
     this.alertMessage = message;
-    this.alertType = "success";
+    this.alertType = 'success';
     this.hideMessageAfterDelay();
   }
 
   private showErrorMessage(
-    message: string = "No se ha podido crear el cliente"
+    message: string = 'No se ha podido crear el cliente',
   ) {
     this.alertMessage = message;
-    this.alertType = "danger";
+    this.alertType = 'danger';
     this.hideMessageAfterDelay();
   }
 

@@ -1,47 +1,39 @@
-import { CommonModule } from "@angular/common";
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from "@angular/forms";
-import { RatesService } from "../../services/rates.service";
-import { EMPTY, Observable, catchError, first, of, switchMap, tap } from "rxjs";
-import { ActivatedRoute, RouterLink, RouterModule } from "@angular/router";
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RatesService } from '../../services/rates.service';
+import { EMPTY, Observable, catchError, first, of, switchMap, tap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 import {
   RateRequestDto,
   RateResponse,
-} from "../../../../interfaces/rates.interface";
+} from '../../../../interfaces/rates.interface';
 
 @Component({
-  selector: "app-edit-rates",
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, RouterModule],
-  templateUrl: "./edit-rates.component.html",
-  styleUrl: "./edit-rates.component.scss",
+  selector: 'app-edit-rates',
+  templateUrl: './edit-rates.component.html',
+  styleUrl: './edit-rates.component.scss',
 })
 export class EditRatesComponent implements OnInit {
   rateForm: FormGroup;
   alertMessage: string | null = null;
-  alertType: string = "success";
-  durationUnit: string = "Month";
+  alertType: string = 'success';
+  durationUnit: string = 'Month';
   rateId: string | null = null;
   rate$: Observable<RateResponse | null> = this.route.paramMap.pipe(
     switchMap((params) => {
-      this.rateId = params.get("id");
+      this.rateId = params.get('id');
       if (this.rateId !== null) {
         return this.ratesService.getRateById(+this.rateId);
       }
       return of(null);
-    })
+    }),
   );
 
   constructor(
     private fb: FormBuilder,
     private ratesService: RatesService,
     private cdr: ChangeDetectorRef,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.rateForm = this.fb.group({
       name: [null, Validators.required],
@@ -53,8 +45,8 @@ export class EditRatesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.rateForm.get("durationUnit")?.setValue("Month");
-    this.rateForm.get("durationUnit")?.valueChanges.subscribe((value) => {
+    this.rateForm.get('durationUnit')?.setValue('Month');
+    this.rateForm.get('durationUnit')?.valueChanges.subscribe((value) => {
       this.durationUnit = value;
     });
     this.setRateData();
@@ -93,20 +85,20 @@ export class EditRatesComponent implements OnInit {
         catchError((error) => {
           this.showErrorMessage(error.error.message);
           return EMPTY;
-        })
+        }),
       )
       .subscribe();
   }
 
   private showSuccessMessage(message: string) {
     this.alertMessage = message;
-    this.alertType = "success";
+    this.alertType = 'success';
     this.hideMessageAfterDelay();
   }
 
   private showErrorMessage(message: string) {
     this.alertMessage = message;
-    this.alertType = "danger";
+    this.alertType = 'danger';
     this.hideMessageAfterDelay();
   }
 

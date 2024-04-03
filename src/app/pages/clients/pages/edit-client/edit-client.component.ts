@@ -1,57 +1,49 @@
-import { CommonModule } from "@angular/common";
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from "@angular/forms";
-import { ActivatedRoute, RouterLink, RouterModule } from "@angular/router";
-import { EMPTY, Observable, catchError, first, of, switchMap, tap } from "rxjs";
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { EMPTY, Observable, catchError, first, of, switchMap, tap } from 'rxjs';
 import {
   Client,
   ClientRequestDto,
   ClientResponse,
-} from "../../../../interfaces/clients.interface";
-import { ClientsService } from "../../services/clients.service";
-import { TrainersResponse } from "../../../../interfaces/trainer.interface";
+} from '../../../../interfaces/clients.interface';
+import { ClientsService } from '../../services/clients.service';
+import { TrainersResponse } from '../../../../interfaces/trainer.interface';
 
 @Component({
-  selector: "app-edit-client",
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, RouterModule],
-  templateUrl: "./edit-client.component.html",
-  styleUrl: "./edit-client.component.scss",
+  selector: 'app-edit-client',
+  templateUrl: './edit-client.component.html',
+  styleUrl: './edit-client.component.scss',
 })
 export class EditClientComponent implements OnInit {
   trainers$: Observable<TrainersResponse> = this.clientsService.getTrainers();
-  trainers: TrainersResponse["data"] = [];
+  trainers: TrainersResponse['data'] = [];
   clientForm: FormGroup;
   alertMessage: string | null = null;
-  alertType: string = "success";
+  alertType: string = 'success';
   clientId: string | null = null;
   client$: Observable<ClientResponse | null> = this.route.paramMap.pipe(
     switchMap((params) => {
-      this.clientId = params.get("id");
+      this.clientId = params.get('id');
       if (this.clientId !== null) {
         return this.clientsService.getClientById(+this.clientId);
       }
       return of(null);
-    })
+    }),
   );
 
   constructor(
     private clientsService: ClientsService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {
     this.clientForm = this.fb.group({
       name: [null, Validators.required],
       firstLastName: [null, Validators.required],
       secondLastName: [null],
       email: [null, [Validators.required, Validators.email]],
-      phoneNumber: [null, Validators.pattern("^\\d{9}$")],
+      phoneNumber: [null, Validators.pattern('^\\d{9}$')],
       birthDate: [null],
       trainer: [null, Validators.required],
     });
@@ -75,8 +67,8 @@ export class EditClientComponent implements OnInit {
 
   patchFormValues(client: Client) {
     this.clientForm.patchValue(client);
-    this.clientForm.get("phoneNumber")?.setValue(Number(client.phoneNumber));
-    this.clientForm.get("trainer")?.setValue(client.trainer?.id);
+    this.clientForm.get('phoneNumber')?.setValue(Number(client.phoneNumber));
+    this.clientForm.get('trainer')?.setValue(client.trainer?.id);
     this.cdr.detectChanges();
   }
 
@@ -100,10 +92,10 @@ export class EditClientComponent implements OnInit {
   }
 
   private prepareFormData() {
-    const trainerId = this.clientForm?.get("trainer")?.value;
+    const trainerId = this.clientForm?.get('trainer')?.value;
 
     const selectedTrainer = this.trainers?.find(
-      (trainer) => Number(trainer.id) === Number(trainerId)
+      (trainer) => Number(trainer.id) === Number(trainerId),
     );
 
     return {
@@ -121,7 +113,7 @@ export class EditClientComponent implements OnInit {
         catchError((error) => {
           this.showErrorMessage(error.error.message);
           return EMPTY;
-        })
+        }),
       )
       .subscribe((value) => {
         this.showSuccessMessage(value.message);
@@ -129,18 +121,18 @@ export class EditClientComponent implements OnInit {
   }
 
   private showSuccessMessage(
-    message: string = "Cliente editado correctamente"
+    message: string = 'Cliente editado correctamente',
   ) {
     this.alertMessage = message;
-    this.alertType = "success";
+    this.alertType = 'success';
     this.hideMessageAfterDelay();
   }
 
   private showErrorMessage(
-    message: string = "No se ha podido editar el cliente"
+    message: string = 'No se ha podido editar el cliente',
   ) {
     this.alertMessage = message;
-    this.alertType = "danger";
+    this.alertType = 'danger';
     this.hideMessageAfterDelay();
   }
 
