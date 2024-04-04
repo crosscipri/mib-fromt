@@ -34,13 +34,13 @@
         </div>
         <ul class="dropdown-menu dropdown-menu-end">
             <li><a class="dropdown-item" [routerLink]="['/clients', clientData.client.id]">Info Cliente</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/clients', clientData.client.id, 'edit']">Editar Cliente</a>
+            <li><a class="dropdown-item" [routerLink]="['/clients',  'edit', clientData.client.id]">Editar Cliente</a>
             </li>
-            <li><a class="dropdown-item">Asignar
+            <li><a class="dropdown-item" (click)="openAddingRateModal()">Asignar
                     tarifa</a></li>
 
             <li><a class="dropdown-item" href="#">Renovar tarifa</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/clients', clientData.client.id, 'historic']">Histórico
+            <li><a class="dropdown-item" [routerLink]="['/clients','historic', clientData.client.id]">Histórico
                     tarifas</a></li>
             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">Borrar cliente</a></li>
         </ul>

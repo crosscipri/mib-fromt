@@ -4,10 +4,18 @@ import { ClientCardComponent } from './client-card.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CreateClientsRoutingModule } from '../../pages/create-clients/create-clients-routing.module';
+import { AssignRateModalModule } from '../assign-rate-modal/assign-rate-modal.module';
 
 @NgModule({
   declarations: [ClientCardComponent],
-  imports: [CommonModule, RouterModule, HttpClientModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    AssignRateModalModule,
+  ],
   exports: [ClientCardComponent],
 })
 export class ClientCardModule {}

@@ -6,6 +6,22 @@ const routes: Routes = [
   {
     path: '',
     component: RatesComponent,
+    children: [
+      {
+        path: 'create',
+        loadChildren: () =>
+          import('./pages/create-rates/create-rates.module').then(
+            (m) => m.CreateRatesModule,
+          ),
+      },
+      {
+        path: 'edit/:id',
+        loadChildren: () =>
+          import('./pages/edit-rates/edit-rates.module').then(
+            (m) => m.EditRatesModule,
+          ),
+      },
+    ],
   },
 ];
 

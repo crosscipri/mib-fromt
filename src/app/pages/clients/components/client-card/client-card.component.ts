@@ -10,6 +10,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClientsService } from '../../services/clients.service';
 import { RatesService } from '../../../rates/services/rates.service';
 import { EMPTY, catchError, first, tap } from 'rxjs';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { AssignRateModalComponent } from '../assign-rate-modal/assign-rate-modal.component';
 
 @Component({
   selector: 'app-client-card',
@@ -17,6 +19,7 @@ import { EMPTY, catchError, first, tap } from 'rxjs';
   styleUrl: './client-card.component.scss',
 })
 export class ClientCardComponent {
+  bsModalRef!: BsModalRef;
   @Output() deleteClient: EventEmitter<number> = new EventEmitter<number>();
 
   @Input()
@@ -40,6 +43,7 @@ export class ClientCardComponent {
   constructor(
     private ratesService: RatesService,
     private clientsService: ClientsService,
+    private modalService: BsModalService,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
   ) {
@@ -72,6 +76,10 @@ export class ClientCardComponent {
         this.clientData = value.data;
         this.cdr.markForCheck();
       });
+  }
+
+  openAddingRateModal() {
+    this.bsModalRef = this.modalService.show(AssignRateModalComponent);
   }
 
   private showSuccessMessage(message: string = 'Cliente creado correctamente') {

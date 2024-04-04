@@ -26,6 +26,7 @@ export class EditClientComponent implements OnInit {
     switchMap((params) => {
       this.clientId = params.get('id');
       if (this.clientId !== null) {
+        console.log('Client ID:', this.clientId);
         return this.clientsService.getClientById(+this.clientId);
       }
       return of(null);

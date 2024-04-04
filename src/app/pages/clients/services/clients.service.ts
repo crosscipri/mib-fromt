@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { ApiHttpService } from "../../../services/api-http.service";
-import { HttpClient } from "@angular/common/http";
-import { environment } from "../../../../environments/environment";
-import { Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import { ApiHttpService } from '../../../services/api-http.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+import { Observable } from 'rxjs';
 import {
   AssignRateToClientDto,
   Client,
@@ -11,19 +11,19 @@ import {
   ClientResponse,
   ClientsResponse,
   UpdateClientResponse,
-} from "../../../interfaces/clients.interface";
+} from '../../../interfaces/clients.interface';
 import {
   ClientRate,
   RateRequestDto,
   RateResponse,
-} from "../../../interfaces/rates.interface";
-import { TrainersResponse } from "../../../interfaces/trainer.interface";
+} from '../../../interfaces/rates.interface';
+import { TrainersResponse } from '../../../interfaces/trainer.interface';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ClientsService extends ApiHttpService {
-  baseUrl = "/api/clients";
+  baseUrl = '/api/clients';
 
   constructor(http: HttpClient) {
     super(http);
@@ -34,6 +34,7 @@ export class ClientsService extends ApiHttpService {
   }
 
   getClientById(clientId: number): Observable<ClientResponse> {
+    console.log('clientId', clientId);
     return this.get(`${this.baseUrl}/${clientId}`);
   }
 
@@ -43,7 +44,7 @@ export class ClientsService extends ApiHttpService {
 
   updateClient(
     clientId: number,
-    clientData: ClientRequestDto
+    clientData: ClientRequestDto,
   ): Observable<UpdateClientResponse> {
     return this.put(`${this.baseUrl}/${clientId}`, clientData);
   }
@@ -54,14 +55,14 @@ export class ClientsService extends ApiHttpService {
 
   createClientRate(
     clientId: number,
-    clientRate: ClientRate
+    clientRate: ClientRate,
   ): Observable<ClientRateResponse> {
     return this.post(`${this.baseUrl}/${clientId}/rate`, clientRate);
   }
 
   renewClientRate(
     clientId: number,
-    renewDate: string
+    renewDate: string,
   ): Observable<ClientRateResponse> {
     return this.post(`${this.baseUrl}/${clientId}/renew`, { renewDate });
   }
@@ -76,12 +77,12 @@ export class ClientsService extends ApiHttpService {
 
   assignRateToClient(
     clientId: number,
-    body: AssignRateToClientDto
+    body: AssignRateToClientDto,
   ): Observable<ClientResponse> {
     return this.post(`${this.baseUrl}/${clientId}/assign-rate`, body);
   }
 
   createRate(clientData: RateRequestDto): Observable<RateResponse> {
-    return this.post("/api/rates", clientData);
+    return this.post('/api/rates', clientData);
   }
 }

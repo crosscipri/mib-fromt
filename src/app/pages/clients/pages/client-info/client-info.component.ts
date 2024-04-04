@@ -14,6 +14,7 @@ export class ClientInfoComponent {
     switchMap((params): Observable<ClientResponse | null> => {
       const id = params.get('id');
       if (id !== null) {
+        console.log('Client ID:', id);
         return this.clientsService.getClientById(+id);
       }
       return of(null);

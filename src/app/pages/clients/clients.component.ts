@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ClientsService } from './services/clients.service';
 import { Observable } from 'rxjs';
 import { ClientsResponse } from '../../interfaces/clients.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clients',
@@ -11,7 +12,14 @@ import { ClientsResponse } from '../../interfaces/clients.interface';
 export class ClientsComponent {
   clients$: Observable<ClientsResponse>;
 
-  constructor(private clientsService: ClientsService) {
+  constructor(
+    private clientsService: ClientsService,
+    private router: Router,
+  ) {
     this.clients$ = this.clientsService.getClients();
+  }
+
+  isClientsPage(): boolean {
+    return this.router.url === '/clients';
   }
 }

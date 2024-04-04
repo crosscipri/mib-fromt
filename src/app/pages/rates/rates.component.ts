@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { EMPTY, Observable, catchError, first } from 'rxjs';
 import { RatesResponse } from '../../interfaces/rates.interface';
 import { RatesService } from './services/rates.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rates',
@@ -12,8 +13,15 @@ export class RatesComponent {
   rates$: Observable<RatesResponse>;
   alertMessage: string | null = null;
   alertType: string = 'success';
-  constructor(private ratesService: RatesService) {
+  constructor(
+    private ratesService: RatesService,
+    private router: Router,
+  ) {
     this.rates$ = this.ratesService.getRates();
+  }
+
+  isRatesPage(): boolean {
+    return this.router.url === '/rates';
   }
 
   deleteRate(rateId: number) {
