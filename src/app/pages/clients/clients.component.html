@@ -1,6 +1,10 @@
 <div class="clients" *ngIf="isClientsPage">
     <h1 class="clients__title">Todos los clientes</h1>
-    <div *ngIf="clients$ | async as clients" class="clients__cards">
+    <form [formGroup]="searchForm" class="form-inline my-2 col-10 col-md-6">
+        <input class="form-control mr-sm-2" type="search" placeholder="Buscar clientes..." aria-label="Search"
+            formControlName="query">
+    </form>
+    <div *ngIf="filteredClients$ | async as clients" class="clients__cards">
         <app-client-card *ngFor="let client of clients?.data" [clientData]="client"
             (deleteClient)="onDeleteClient($event)" (payRate)="onPayClientRate($event)"></app-client-card>
     </div>
