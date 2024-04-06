@@ -32,7 +32,10 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error) => {
-        if (error instanceof HttpErrorResponse && error.status === 401) {
+        if (
+          (error instanceof HttpErrorResponse && error.status === 401) ||
+          error.includes('401')
+        ) {
           return this.handle401Error(request, next);
         } else {
           return throwError(error);
