@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { EMPTY, Observable, catchError, first } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable, first, tap } from 'rxjs';
 import { RatesResponse } from '../../interfaces/rates.interface';
 import { RatesService } from './services/rates.service';
 import { Router } from '@angular/router';
@@ -11,17 +11,14 @@ import { Router } from '@angular/router';
 })
 export class RatesComponent {
   rates$: Observable<RatesResponse>;
-  alertMessage: string | null = null;
-  alertType: string = 'success';
+  isRatesPage: boolean;
+
   constructor(
     private ratesService: RatesService,
     private router: Router,
   ) {
+    this.isRatesPage = this.router.url === '/rates';
     this.rates$ = this.ratesService.getRates();
-  }
-
-  isRatesPage(): boolean {
-    return this.router.url === '/rates';
   }
 
   deleteRate(rateId: number) {
@@ -30,30 +27,8 @@ export class RatesComponent {
       .deleteRate(rateId)
       .pipe(
         first(),
-        catchError((error) => {
-          this.showErrorMessage(error.error.message);
-          return EMPTY;
-        }),
+        tap(() => (this.rates$ = this.ratesService.getRates())),
       )
-      .subscribe((value) => {
-        this.showSuccessMessage(value.message);
-        this.rates$ = this.ratesService.getRates();
-      });
-  }
-
-  private showSuccessMessage(message: string) {
-    this.alertMessage = message;
-    this.alertType = 'success';
-    this.hideMessageAfterDelay();
-  }
-
-  private showErrorMessage(message: string) {
-    this.alertMessage = message;
-    this.alertType = 'danger';
-    this.hideMessageAfterDelay();
-  }
-
-  private hideMessageAfterDelay() {
-    setTimeout(() => (this.alertMessage = null), 2000);
+      .subscribe();
   }
 }

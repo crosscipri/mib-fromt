@@ -11,16 +11,13 @@ import { Router } from '@angular/router';
 })
 export class ClientsComponent {
   clients$: Observable<ClientsResponse>;
-
+  isClientsPage: boolean;
   constructor(
     private clientsService: ClientsService,
     private router: Router,
   ) {
+    this.isClientsPage = this.router.url === '/clients';
     this.clients$ = this.clientsService.getClients();
-  }
-
-  isClientsPage(): boolean {
-    return this.router.url === '/clients';
   }
 
   onDeleteClient(clientId: number) {

@@ -9,6 +9,7 @@ import {
 } from '../../../../interfaces/clients.interface';
 import { ClientsService } from '../../services/clients.service';
 import { TrainersResponse } from '../../../../interfaces/trainer.interface';
+import { AlertService } from '../../../../services/alert.service';
 
 @Component({
   selector: 'app-edit-client',
@@ -19,8 +20,6 @@ export class EditClientComponent implements OnInit {
   trainers$: Observable<TrainersResponse> = this.clientsService.getTrainers();
   trainers: TrainersResponse['data'] = [];
   clientForm: FormGroup;
-  alertMessage: string | null = null;
-  alertType: string = 'success';
   clientId: string | null = null;
   client$: Observable<ClientResponse | null> = this.route.paramMap.pipe(
     switchMap((params) => {
@@ -38,6 +37,7 @@ export class EditClientComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
+    private alertService: AlertService,
   ) {
     this.clientForm = this.fb.group({
       name: [null, Validators.required],
@@ -110,34 +110,8 @@ export class EditClientComponent implements OnInit {
       .updateClient(Number(this.clientId), formData)
       .pipe(
         first(),
-        tap(() => this.showSuccessMessage()),
-        catchError((error) => {
-          this.showErrorMessage(error.error.message);
-          return EMPTY;
-        }),
+        tap((val) => this.alertService.show(val.message, 'success')),
       )
-      .subscribe((value) => {
-        this.showSuccessMessage(value.message);
-      });
-  }
-
-  private showSuccessMessage(
-    message: string = 'Cliente editado correctamente',
-  ) {
-    this.alertMessage = message;
-    this.alertType = 'success';
-    this.hideMessageAfterDelay();
-  }
-
-  private showErrorMessage(
-    message: string = 'No se ha podido editar el cliente',
-  ) {
-    this.alertMessage = message;
-    this.alertType = 'danger';
-    this.hideMessageAfterDelay();
-  }
-
-  private hideMessageAfterDelay() {
-    setTimeout(() => (this.alertMessage = null), 2000);
+      .subscribe();
   }
 }

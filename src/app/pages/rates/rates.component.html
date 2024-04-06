@@ -1,11 +1,7 @@
-<div class="rates" *ngIf="isRatesPage()">
+<div class="rates" *ngIf="isRatesPage">
     <h1 class="rates__title">Todas las tarifas</h1>
     <div *ngIf="rates$ | async as rates" class="rates__cards">
         <app-rate-card *ngFor="let rate of rates?.data" [rate]="rate" (deleteRate)="deleteRate($event)"></app-rate-card>
     </div>
-</div>
-<div *ngIf="alertMessage" class="alert alert-{{ alertType }}" role="alert"
-    style="width: 90%; position: fixed; top: 30px; left: 50%; transform: translateX(-50%); z-index: 9999;">
-    {{ alertMessage }}
 </div>
 <router-outlet></router-outlet>

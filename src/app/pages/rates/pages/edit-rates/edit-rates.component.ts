@@ -1,12 +1,13 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RatesService } from '../../services/rates.service';
-import { EMPTY, Observable, catchError, first, of, switchMap, tap } from 'rxjs';
+import { Observable, first, of, switchMap, tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import {
   RateRequestDto,
   RateResponse,
 } from '../../../../interfaces/rates.interface';
+import { AlertService } from '../../../../services/alert.service';
 
 @Component({
   selector: 'app-edit-rates',
@@ -15,8 +16,6 @@ import {
 })
 export class EditRatesComponent implements OnInit {
   rateForm: FormGroup;
-  alertMessage: string | null = null;
-  alertType: string = 'success';
   durationUnit: string = 'Month';
   rateId: string | null = null;
   rate$: Observable<RateResponse | null> = this.route.paramMap.pipe(
@@ -34,6 +33,7 @@ export class EditRatesComponent implements OnInit {
     private ratesService: RatesService,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
+    private alertService: AlertService,
   ) {
     this.rateForm = this.fb.group({
       name: [null, Validators.required],
@@ -60,14 +60,14 @@ export class EditRatesComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.isFormInvalid()) {
+    if (this.#isFormInvalid()) {
       return;
     }
 
-    this.updateRate(this.rateId as string, this.rateForm.getRawValue());
+    this.#updateRate(this.rateId as string, this.rateForm.getRawValue());
   }
 
-  private isFormInvalid(): boolean {
+  #isFormInvalid(): boolean {
     if (this.rateForm.invalid) {
       this.rateForm.markAllAsTouched();
       return true;
@@ -76,33 +76,13 @@ export class EditRatesComponent implements OnInit {
     return false;
   }
 
-  private updateRate(rateId: string, formData: RateRequestDto) {
+  #updateRate(rateId: string, formData: RateRequestDto) {
     this.ratesService
       .updateRate(Number(rateId), formData)
       .pipe(
         first(),
-        tap((value) => this.showSuccessMessage(value.message)),
-        catchError((error) => {
-          this.showErrorMessage(error.error.message);
-          return EMPTY;
-        }),
+        tap((value) => this.alertService.show(value.message, 'success')),
       )
       .subscribe();
-  }
-
-  private showSuccessMessage(message: string) {
-    this.alertMessage = message;
-    this.alertType = 'success';
-    this.hideMessageAfterDelay();
-  }
-
-  private showErrorMessage(message: string) {
-    this.alertMessage = message;
-    this.alertType = 'danger';
-    this.hideMessageAfterDelay();
-  }
-
-  private hideMessageAfterDelay() {
-    setTimeout(() => (this.alertMessage = null), 3000);
   }
 }

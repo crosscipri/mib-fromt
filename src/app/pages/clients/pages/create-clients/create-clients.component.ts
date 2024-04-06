@@ -4,6 +4,7 @@ import { TrainersResponse } from '../../../../interfaces/trainer.interface';
 import { EMPTY, Observable, catchError, first, tap } from 'rxjs';
 import { ClientsService } from '../../services/clients.service';
 import { ClientRequestDto } from '../../../../interfaces/clients.interface';
+import { AlertService } from '../../../../services/alert.service';
 
 @Component({
   selector: 'app-create-clients',
@@ -14,12 +15,11 @@ export class CreateClientsComponent {
   trainers$: Observable<TrainersResponse> = this.clientsService.getTrainers();
   trainers: TrainersResponse['data'] = [];
   clientForm: FormGroup;
-  alertMessage: string | null = null;
-  alertType: string = 'success';
 
   constructor(
     private fb: FormBuilder,
     private clientsService: ClientsService,
+    private alertService: AlertService,
   ) {
     this.clientForm = this.fb.group({
       name: [null, Validators.required],
@@ -73,30 +73,8 @@ export class CreateClientsComponent {
       .createClient(formData)
       .pipe(
         first(),
-        tap(() => this.showSuccessMessage()),
-        catchError((error) => {
-          this.showErrorMessage(error.error.message);
-          return EMPTY;
-        }),
+        tap((val) => this.alertService.show(val.message, 'success')),
       )
       .subscribe();
-  }
-
-  private showSuccessMessage(message: string = 'Cliente creado correctamente') {
-    this.alertMessage = message;
-    this.alertType = 'success';
-    this.hideMessageAfterDelay();
-  }
-
-  private showErrorMessage(
-    message: string = 'No se ha podido crear el cliente',
-  ) {
-    this.alertMessage = message;
-    this.alertType = 'danger';
-    this.hideMessageAfterDelay();
-  }
-
-  private hideMessageAfterDelay() {
-    setTimeout(() => (this.alertMessage = null), 3000);
   }
 }

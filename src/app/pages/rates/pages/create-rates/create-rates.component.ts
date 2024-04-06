@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EMPTY, catchError, first, tap } from 'rxjs';
 import { RateRequestDto } from '../../../../interfaces/rates.interface';
 import { RatesService } from '../../services/rates.service';
+import { AlertService } from '../../../../services/alert.service';
 
 @Component({
   selector: 'app-create-rates',
@@ -11,13 +12,12 @@ import { RatesService } from '../../services/rates.service';
 })
 export class CreateRatesComponent implements OnInit {
   rateForm: FormGroup;
-  alertMessage: string | null = null;
-  alertType: string = 'success';
   durationUnit: string = 'Month';
   constructor(
     private fb: FormBuilder,
     private ratesService: RatesService,
     private cdr: ChangeDetectorRef,
+    private alertService: AlertService,
   ) {
     this.rateForm = this.fb.group({
       name: [null, Validators.required],
@@ -58,28 +58,8 @@ export class CreateRatesComponent implements OnInit {
       .createRate(formData)
       .pipe(
         first(),
-        tap((value) => this.showSuccessMessage(value.message)),
-        catchError((error) => {
-          this.showErrorMessage(error.error.message);
-          return EMPTY;
-        }),
+        tap((value) => this.alertService.show(value.message, 'success')),
       )
       .subscribe();
-  }
-
-  private showSuccessMessage(message: string) {
-    this.alertMessage = message;
-    this.alertType = 'success';
-    this.hideMessageAfterDelay();
-  }
-
-  private showErrorMessage(message: string) {
-    this.alertMessage = message;
-    this.alertType = 'danger';
-    this.hideMessageAfterDelay();
-  }
-
-  private hideMessageAfterDelay() {
-    setTimeout(() => (this.alertMessage = null), 3000);
   }
 }

@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -14,9 +16,11 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     HttpClientModule,
     AppRoutingModule,
     ModalModule.forRoot(),
+    AlertModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

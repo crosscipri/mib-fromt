@@ -94,10 +94,6 @@ export class ClientCardComponent {
     const modalRef = this.modalService.open(AssignRateModalComponent);
     modalRef.componentInstance.clientId = clientId;
     modalRef.dismissed.subscribe((result) => {
-      if (!result) {
-        this.showErrorMessage('No se ha podido asignar la tarifa');
-        return;
-      }
       this.clientData = result.data;
       this.cdr.detectChanges();
     });
