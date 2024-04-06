@@ -26,7 +26,6 @@ export const PAGES: Routes = [
       import('./pages/rates/rates.module').then((m) => m.RatesModule),
     canActivate: [AuthGuard],
   },
-
   {
     path: '**',
     redirectTo: `/home`,
