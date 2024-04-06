@@ -2,6 +2,7 @@
     <div class="card__container">
         <div class="card__container__client">
             <div class="card__container__client__info">
+                {{clientData.client.id}}
                 <span class="card__container__client__info__name">{{clientData.client.name}}
                     {{clientData.client.firstLastName}}
                     {{clientData.client.secondLastName}}</span>
@@ -28,15 +29,15 @@
             </div>
         </div>
     </div>
-    <div class="card__actions">
+    <div class="card__actions dropstart">
         <div data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-three-dots-vertical"></i>
         </div>
-        <ul class="dropdown-menu dropdown-menu-end">
+        <ul class="dropdown-menu ">
             <li><a class="dropdown-item" [routerLink]="['/clients', clientData.client.id]">Info Cliente</a></li>
             <li><a class="dropdown-item" [routerLink]="['/clients',  'edit', clientData.client.id]">Editar Cliente</a>
             </li>
-            <li><a class="dropdown-item" (click)="openAddingRateModal()">Asignar
+            <li><a class="dropdown-item" (click)="openAddingRateModal(clientData.client.id)">Asignar
                     tarifa</a></li>
 
             <li><a class="dropdown-item" href="#">Renovar tarifa</a></li>

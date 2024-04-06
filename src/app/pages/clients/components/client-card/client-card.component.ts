@@ -5,6 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
+
 import { ClientData } from '../../../../interfaces/clients.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClientsService } from '../../services/clients.service';
@@ -12,6 +13,7 @@ import { RatesService } from '../../../rates/services/rates.service';
 import { EMPTY, catchError, first, tap } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AssignRateModalComponent } from '../assign-rate-modal/assign-rate-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-client-card',
@@ -43,9 +45,9 @@ export class ClientCardComponent {
   constructor(
     private ratesService: RatesService,
     private clientsService: ClientsService,
-    private modalService: BsModalService,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
+    private modalService: NgbModal,
   ) {
     this.assignRateForm = this.fb.group({
       rateId: [null, Validators.required],
@@ -78,8 +80,13 @@ export class ClientCardComponent {
       });
   }
 
-  openAddingRateModal() {
-    this.bsModalRef = this.modalService.show(AssignRateModalComponent);
+  openAddingRateModal(clientId: number | undefined) {
+    if (!clientId) {
+      return;
+    }
+
+    const modalRef = this.modalService.open(AssignRateModalComponent);
+    modalRef.componentInstance.clientId = clientId;
   }
 
   private showSuccessMessage(message: string = 'Cliente creado correctamente') {
