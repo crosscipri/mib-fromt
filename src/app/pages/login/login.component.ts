@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +11,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginComponent {
   form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+  ) {
     this.form = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -24,14 +29,6 @@ export class LoginComponent {
 
     const { email, password } = this.form.value;
 
-    localStorage.setItem(
-      'auth_token',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
-    );
-
-    // this.authService
-    //   .login(email, password)
-    //   .pipe(takeUntilDestroyed())
-    //   .subscribe((token) => localStorage.setItem("auth_token", token.idToken));
+    this.authService.login(email, password).pipe(first()).subscribe();
   }
 }

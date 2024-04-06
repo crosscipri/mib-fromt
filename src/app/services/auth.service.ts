@@ -1,21 +1,45 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { env } from 'process';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { ApiHttpService } from './api-http.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService extends ApiHttpService {
-  baseUrl = `${environment.baseApiUrl}/api/auth`;
+  baseUrl = `/api/auth`;
 
-  constructor(http: HttpClient) {
+  constructor(
+    http: HttpClient,
+    private router: Router,
+  ) {
     super(http);
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.post(`/login`, { email, password });
+    return this.post(`${this.baseUrl}/login`, { email, password }).pipe(
+      tap((response) => {
+        localStorage.setItem('idToken', response.data.idToken);
+        localStorage.setItem('refreshToken', response.data.refreshToken);
+        this.router.navigate(['/home']);
+      }),
+    );
+  }
+
+  refreshToken(refreshToken: string): Observable<any> {
+    return this.post(`${this.baseUrl}/refresh-token`, { refreshToken }).pipe(
+      tap((response) => {
+        localStorage.setItem('idToken', response.data.idToken);
+        localStorage.setItem('refreshToken', response.data.refreshToken);
+      }),
+    );
+  }
+
+  logout() {
+    localStorage.removeItem('idToken');
+    localStorage.removeItem('refreshToken');
+    this.router.navigate(['/login']);
   }
 }
