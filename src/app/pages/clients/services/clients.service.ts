@@ -79,7 +79,7 @@ export class ClientsService extends ApiHttpService {
     clientId: number,
     body: AssignRateToClientDto,
   ): Observable<ClientResponse> {
-    return this.post(`${this.baseUrl}/${clientId}/assign-rate`, body);
+    return this.post(`${this.baseUrl}/${clientId}/clientRate`, body);
   }
 
   createRate(clientData: RateRequestDto): Observable<RateResponse> {

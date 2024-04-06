@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClientsService } from '../../services/clients.service';
 import { RatesService } from '../../../rates/services/rates.service';
 import { EMPTY, catchError, first, tap } from 'rxjs';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { AssignRateModalComponent } from '../assign-rate-modal/assign-rate-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -26,6 +26,7 @@ export class ClientCardComponent {
 
   @Input()
   set clientData(clientData: ClientData | null) {
+    console.log('clientData', clientData);
     this.#clientData = clientData;
   }
 
@@ -62,8 +63,6 @@ export class ClientCardComponent {
       this.assignRateForm.markAllAsTouched();
       return;
     }
-    console.log('clientId', clientId);
-    console.log('0', this.currentClientId);
     this.clientsService
       .assignRateToClient(clientId, this.assignRateForm.getRawValue())
       .pipe(
@@ -87,6 +86,14 @@ export class ClientCardComponent {
 
     const modalRef = this.modalService.open(AssignRateModalComponent);
     modalRef.componentInstance.clientId = clientId;
+    modalRef.dismissed.subscribe((result) => {
+      if (!result) {
+        this.showErrorMessage('No se ha podido asignar la tarifa');
+        return;
+      }
+      this.clientData = result.data;
+      this.cdr.detectChanges();
+    });
   }
 
   private showSuccessMessage(message: string = 'Cliente creado correctamente') {

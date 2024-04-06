@@ -3,18 +3,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RatesService } from '../../../rates/services/rates.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ClientsService } from '../../services/clients.service';
+import { EMPTY, catchError, first } from 'rxjs';
 @Component({
   selector: 'app-assign-rate-modal',
   templateUrl: './assign-rate-modal.component.html',
   styleUrl: './assign-rate-modal.component.scss',
 })
-export class AssignRateModalComponent implements OnInit {
+export class AssignRateModalComponent {
   assignRateForm: FormGroup;
   rates$ = this.ratesService.getRates();
   clientId!: number;
   constructor(
     private fb: FormBuilder,
     private ratesService: RatesService,
+    private clientsService: ClientsService,
     public activeModal: NgbActiveModal,
   ) {
     this.assignRateForm = this.fb.group({
@@ -25,20 +28,27 @@ export class AssignRateModalComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    console.log(this.clientId);
-  }
-
   onSubmit() {
     if (this.assignRateForm.invalid) {
       this.assignRateForm.markAllAsTouched();
       return;
     }
 
-    console.log('Form is valid');
+    this.assingRate();
   }
 
-  onModalOpen(data: any) {
-    console.log('Modal opened', data);
+  assingRate() {
+    this.clientsService
+      .assignRateToClient(this.clientId, this.assignRateForm.value)
+      .pipe(
+        first(),
+        catchError(() => {
+          this.activeModal.dismiss(false);
+          return EMPTY;
+        }),
+      )
+      .subscribe((result) => {
+        this.activeModal.dismiss(result);
+      });
   }
 }
