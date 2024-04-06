@@ -39,7 +39,7 @@
             <li><a class="dropdown-item" (click)="openAddingRateModal(clientData.client.id)">Asignar
                     tarifa</a></li>
 
-            <li><a class="dropdown-item" href="#">Pagar tarifa</a></li>
+            <li><a class="dropdown-item" (click)="openPaymentRateModal(clientData)">Pagar tarifa</a></li>
             <li><a class="dropdown-item" [routerLink]="['/clients','historic', clientData.client.id]">Histórico
                     tarifas</a></li>
             <li><a class="dropdown-item" (click)="openDeleteModal(clientData.client)">Borrar cliente</a></li>

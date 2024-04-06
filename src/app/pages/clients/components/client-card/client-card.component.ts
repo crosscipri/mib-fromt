@@ -6,7 +6,11 @@ import {
   Output,
 } from '@angular/core';
 
-import { Client, ClientData } from '../../../../interfaces/clients.interface';
+import {
+  Client,
+  ClientData,
+  PayRate,
+} from '../../../../interfaces/clients.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClientsService } from '../../services/clients.service';
 import { RatesService } from '../../../rates/services/rates.service';
@@ -15,6 +19,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { AssignRateModalComponent } from '../assign-rate-modal/assign-rate-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteModalComponent } from '../../../../components/delete-modal/delete-modal.component';
+import { PayRateModalComponent } from '../pay-rate-modal/pay-rate-modal.component';
 
 @Component({
   selector: 'app-client-card',
@@ -24,6 +29,7 @@ import { DeleteModalComponent } from '../../../../components/delete-modal/delete
 export class ClientCardComponent {
   bsModalRef!: BsModalRef;
   @Output() deleteClient: EventEmitter<number> = new EventEmitter<number>();
+  @Output() payRate: EventEmitter<PayRate> = new EventEmitter<PayRate>();
 
   @Input()
   set clientData(clientData: ClientData | null) {
@@ -108,6 +114,24 @@ export class ClientCardComponent {
         return;
       }
       this.deleteClient.emit(client.id);
+    });
+  }
+
+  openPaymentRateModal(data: ClientData) {
+    const modalRef = this.modalService.open(PayRateModalComponent);
+    modalRef.closed.subscribe((val) => {
+      console.log(val);
+      if (!val) {
+        return;
+      }
+
+      const payRate: PayRate = {
+        clientId: data.client.id as number,
+        rateId: data.rate?.id as number,
+        paymentDate: val,
+      };
+
+      this.payRate.emit(payRate);
     });
   }
 

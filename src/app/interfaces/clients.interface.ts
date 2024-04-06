@@ -1,5 +1,5 @@
-import { Rate } from "./rates.interface";
-import { Trainer } from "./trainer.interface";
+import { Rate } from './rates.interface';
+import { Trainer } from './trainer.interface';
 
 export interface Client {
   id?: number;
@@ -66,5 +66,11 @@ export interface AssignRateToClientDto {
   rateId: number;
   startDate: string;
   paid: boolean;
+  paymentDate: string;
+}
+
+export interface PayRate {
+  clientId: number;
+  rateId: number;
   paymentDate: string;
 }

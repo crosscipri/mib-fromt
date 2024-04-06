@@ -2,7 +2,7 @@
     <h1 class="clients__title">Todos los clientes</h1>
     <div *ngIf="clients$ | async as clients" class="clients__cards">
         <app-client-card *ngFor="let client of clients?.data" [clientData]="client"
-            (deleteClient)="onDeleteClient($event)"></app-client-card>
+            (deleteClient)="onDeleteClient($event)" (payRate)="onPayClientRate($event)"></app-client-card>
     </div>
 </div>
 <router-outlet></router-outlet>

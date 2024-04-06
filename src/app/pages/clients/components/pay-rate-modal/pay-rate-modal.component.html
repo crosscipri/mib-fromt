@@ -1,0 +1,25 @@
+<div class="modal-container">
+    <div class="title">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Pagar tarifa</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="activeModal.close()"></button>
+    </div>
+    <div class="content">
+        <form [formGroup]="payRateForm">
+            <div class=" col-12 mb-3">
+                <label for="paymentDate" class="form-label asterisk">Fecha de pago</label>
+                <input type="date" class="form-control" id="paymentDate" formControlName="paymentDate"
+                    [ngClass]="{'is-invalid': payRateForm?.get('paymentDate')?.invalid && payRateForm?.get('paymentDate')?.touched}">
+                <div *ngIf="payRateForm?.get('paymentDate')?.invalid && payRateForm?.get('paymentDate')?.touched"
+                    class="text-danger">
+                    Fecha de inicio obligatoria
+                </div>
+            </div>
+        </form>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cerrar</button>
+            <button type="button" class="btn btn-primary" (click)="activeModal.close(paymentDate)">Pagar
+                tarifa</button>
+        </div>
+    </div>
+</div>

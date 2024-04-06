@@ -85,4 +85,10 @@ export class ClientsService extends ApiHttpService {
   createRate(clientData: RateRequestDto): Observable<RateResponse> {
     return this.post('/api/rates', clientData);
   }
+
+  payClientRate(clientId: number, rateId: number, paymentDate: string) {
+    return this.post(`${this.baseUrl}/${clientId}/clientRate/${rateId}/pay`, {
+      paymentDate,
+    });
+  }
 }
