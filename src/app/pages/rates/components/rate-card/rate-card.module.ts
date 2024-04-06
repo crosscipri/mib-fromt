@@ -4,10 +4,17 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RateCardComponent } from './rate-card.component';
+import { DeleteModalModule } from '../../../../components/delete-modal/delete-modal.module';
 
 @NgModule({
   declarations: [RateCardComponent],
-  imports: [CommonModule, RouterModule, HttpClientModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    DeleteModalModule,
+  ],
   exports: [RateCardComponent],
 })
 export class RateCardModule {}

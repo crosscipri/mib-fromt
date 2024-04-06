@@ -39,43 +39,19 @@
             <li><a class="dropdown-item" (click)="openAddingRateModal(clientData.client.id)">Asignar
                     tarifa</a></li>
 
-            <li><a class="dropdown-item" href="#">Renovar tarifa</a></li>
+            <li><a class="dropdown-item" href="#">Pagar tarifa</a></li>
             <li><a class="dropdown-item" [routerLink]="['/clients','historic', clientData.client.id]">Histórico
                     tarifas</a></li>
-            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">Borrar cliente</a></li>
+            <li><a class="dropdown-item" (click)="openDeleteModal(clientData.client)">Borrar cliente</a></li>
         </ul>
     </div>
 
+    <ng-template #emptyTrainer>
+        <span class="card__container__rate__data__coach__empty pt-2">
+            <i class="bi bi-person-fill"></i> No asignado</span>
+    </ng-template>
 
-    <!-- Delete Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Borrar cliente</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ¿Estás seguro de que quieres borrar al cliente {{clientData?.client?.name}}
-                    {{clientData?.client?.firstLastName}}
-                    {{clientData?.client?.secondLastName}}?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                        (click)="deleteClient.emit(clientData?.client?.id || 0)">Borrar cliente</button>
-                </div>
-            </div>
-        </div>
+    <div *ngIf="alertMessage" class="alert alert-{{ alertType }}" role="alert"
+        style="width: 90%; position: fixed; top: 30px; left: 50%; transform: translateX(-50%); z-index: 9999;">
+        {{ alertMessage }}
     </div>
-</div>
-
-<ng-template #emptyTrainer>
-    <span class="card__container__rate__data__coach__empty pt-2">
-        <i class="bi bi-person-fill"></i> No asignado</span>
-</ng-template>
-
-<div *ngIf="alertMessage" class="alert alert-{{ alertType }}" role="alert"
-    style="width: 90%; position: fixed; top: 30px; left: 50%; transform: translateX(-50%); z-index: 9999;">
-    {{ alertMessage }}
-</div>

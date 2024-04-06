@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 
-import { ClientData } from '../../../../interfaces/clients.interface';
+import { Client, ClientData } from '../../../../interfaces/clients.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClientsService } from '../../services/clients.service';
 import { RatesService } from '../../../rates/services/rates.service';
@@ -14,6 +14,7 @@ import { EMPTY, catchError, first, tap } from 'rxjs';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { AssignRateModalComponent } from '../assign-rate-modal/assign-rate-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeleteModalComponent } from '../../../../components/delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-client-card',
@@ -93,6 +94,20 @@ export class ClientCardComponent {
       }
       this.clientData = result.data;
       this.cdr.detectChanges();
+    });
+  }
+
+  openDeleteModal(client: Client) {
+    const modalRef = this.modalService.open(DeleteModalComponent);
+    modalRef.componentInstance.client = client;
+    modalRef.componentInstance.message = 'al cliente';
+    modalRef.componentInstance.text = 'cliente';
+    modalRef.closed.subscribe((val) => {
+      console.log(val);
+      if (!val) {
+        return;
+      }
+      this.deleteClient.emit(client.id);
     });
   }
 

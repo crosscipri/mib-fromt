@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateClientsRoutingModule } from '../../pages/create-clients/create-clients-routing.module';
 import { AssignRateModalModule } from '../assign-rate-modal/assign-rate-modal.module';
+import { DeleteModalModule } from '../../../../components/delete-modal/delete-modal.module';
 
 @NgModule({
   declarations: [ClientCardComponent],
@@ -15,6 +16,7 @@ import { AssignRateModalModule } from '../assign-rate-modal/assign-rate-modal.mo
     HttpClientModule,
     ReactiveFormsModule,
     AssignRateModalModule,
+    DeleteModalModule,
   ],
   exports: [ClientCardComponent],
 })

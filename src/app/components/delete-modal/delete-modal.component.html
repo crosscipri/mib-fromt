@@ -1,0 +1,20 @@
+<div class="modal-container">
+    <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Borrar {{text}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="activeModal.close()"></button>
+    </div>
+    <div class="content">
+        <div class="modal-body" *ngIf="client">
+            ¿Estás seguro de que quieres borrar {{message}} {{client?.name}} {{client?.firstLastName}}
+            {{client?.secondLastName}}?
+        </div>
+        <div class="modal-body" *ngIf="!client">
+            ¿Estás seguro de que quieres borrar {{message}}?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cerrar</button>
+            <button type="button" class="btn btn-danger" (click)="activeModal.close(true)">Eliminar {{text}}</button>
+        </div>
+    </div>
+</div>

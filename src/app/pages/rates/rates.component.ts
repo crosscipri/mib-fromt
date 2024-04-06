@@ -25,6 +25,7 @@ export class RatesComponent {
   }
 
   deleteRate(rateId: number) {
+    console.log(rateId);
     this.ratesService
       .deleteRate(rateId)
       .pipe(
@@ -35,7 +36,6 @@ export class RatesComponent {
         }),
       )
       .subscribe((value) => {
-        console.log(value);
         this.showSuccessMessage(value.message);
         this.rates$ = this.ratesService.getRates();
       });

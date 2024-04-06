@@ -2,7 +2,7 @@
     <div class="title">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Asignar tarifa</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-            (click)="activeModal.dismiss()"></button>
+            (click)="activeModal.close()"></button>
     </div>
     <div class="content">
         <form [formGroup]="assignRateForm">
@@ -40,7 +40,7 @@
             </div>
         </form>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cerrar</button>
+            <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cerrar</button>
             <button type="button" class="btn btn-primary" (click)="onSubmit()">Asignar tarifa</button>
         </div>
     </div>

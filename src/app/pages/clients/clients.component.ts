@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ClientsService } from './services/clients.service';
-import { Observable } from 'rxjs';
+import { Observable, first } from 'rxjs';
 import { ClientsResponse } from '../../interfaces/clients.interface';
 import { Router } from '@angular/router';
 
@@ -21,5 +21,14 @@ export class ClientsComponent {
 
   isClientsPage(): boolean {
     return this.router.url === '/clients';
+  }
+
+  onDeleteClient(clientId: number) {
+    this.clientsService
+      .deleteClient(clientId)
+      .pipe(first())
+      .subscribe(() => {
+        this.clients$ = this.clientsService.getClients();
+      });
   }
 }

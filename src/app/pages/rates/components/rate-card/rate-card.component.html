@@ -1,5 +1,4 @@
 <div *ngIf="rate" class="card">
-    {{rate.id}}
     <div class="card__container">
         <div class="card__container__rates">
             <div class="card__container__rates__info">
@@ -36,26 +35,7 @@
         <ul class="dropdown-menu dropdown-menu-end">
             <li><a class="dropdown-item" [routerLink]="['/rates',  'edit', rate.id]">Editar Tarifa</a>
             </li>
-            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">Borrar tarifa</a></li>
+            <li><a class="dropdown-item" (click)="onDeleteRate(rate)">Borrar tarifa</a></li>
         </ul>
-    </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Borrar tarifa</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ¿Estás seguro de que quieres borrar la tarifa {{rate?.name ?? '-'}}?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                    (click)="onDeleteRate(rate?.id || 0)">Borrar tarifa</button>
-            </div>
-        </div>
     </div>
 </div>
