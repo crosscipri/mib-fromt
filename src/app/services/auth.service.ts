@@ -29,7 +29,7 @@ export class AuthService extends ApiHttpService {
   }
 
   refreshToken(refreshToken: string): Observable<any> {
-    return this.post(`${this.baseUrl}/refresh-token`, { refreshToken }).pipe(
+    return this.post(`${this.baseUrl}/login/refresh`, { refreshToken }).pipe(
       tap((response) => {
         localStorage.setItem('idToken', response.data.idToken);
         localStorage.setItem('refreshToken', response.data.refreshToken);

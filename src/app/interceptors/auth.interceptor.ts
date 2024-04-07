@@ -23,11 +23,13 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler,
   ): Observable<HttpEvent<any>> {
-    if (localStorage.getItem('idToken')) {
-      request = this.addToken(
-        request,
-        localStorage.getItem('idToken') as string,
-      );
+    if (!this.isLoginOrRefreshRequest(request)) {
+      if (localStorage.getItem('idToken')) {
+        request = this.addToken(
+          request,
+          localStorage.getItem('idToken') as string,
+        );
+      }
     }
 
     return next.handle(request).pipe(
@@ -75,5 +77,10 @@ export class AuthInterceptor implements HttpInterceptor {
         }),
       );
     }
+  }
+
+  private isLoginOrRefreshRequest(request: HttpRequest<any>): boolean {
+    const { url } = request;
+    return url.endsWith('/login') || url.endsWith('/login/refresh');
   }
 }
