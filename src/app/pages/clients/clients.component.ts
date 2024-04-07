@@ -14,13 +14,11 @@ export class ClientsComponent {
   clients$: Observable<ClientsResponse>;
   filteredClients$: Observable<ClientsResponse>;
   searchQuery: string = '';
-  isClientsPage: boolean;
   searchForm: FormGroup;
   constructor(
     private clientsService: ClientsService,
     private router: Router,
   ) {
-    this.isClientsPage = this.router.url === '/clients';
     this.clients$ = this.clientsService.getClients();
     this.filteredClients$ = this.clients$;
     this.searchForm = new FormGroup({
@@ -37,12 +35,17 @@ export class ClientsComponent {
     ) as Observable<ClientsResponse>;
   }
 
+  isClientsPage(): boolean {
+    return this.router.url === '/clients';
+  }
+
   onDeleteClient(clientId: number) {
     this.clientsService
       .deleteClient(clientId)
       .pipe(first())
       .subscribe(() => {
         this.clients$ = this.clientsService.getClients();
+        this.filteredClients$ = this.clients$;
       });
   }
 
@@ -67,6 +70,7 @@ export class ClientsComponent {
       .subscribe(() => {
         console.log('Pago realizado');
         this.clients$ = this.clientsService.getClients();
+        this.filteredClients$ = this.clients$;
       });
   }
 

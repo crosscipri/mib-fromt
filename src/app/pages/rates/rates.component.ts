@@ -11,14 +11,16 @@ import { Router } from '@angular/router';
 })
 export class RatesComponent {
   rates$: Observable<RatesResponse>;
-  isRatesPage: boolean;
 
   constructor(
     private ratesService: RatesService,
     private router: Router,
   ) {
-    this.isRatesPage = this.router.url === '/rates';
     this.rates$ = this.ratesService.getRates();
+  }
+
+  isRatesPage(): boolean {
+    return this.router.url === '/rates';
   }
 
   deleteRate(rateId: number) {

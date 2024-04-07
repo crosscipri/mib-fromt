@@ -1,12 +1,19 @@
-<div class="clients" *ngIf="isClientsPage">
+<div class="clients" *ngIf="isClientsPage()">
     <h1 class="clients__title">Todos los clientes</h1>
     <form [formGroup]="searchForm" class="form-inline my-2 col-10 col-md-6">
         <input class="form-control mr-sm-2" type="search" placeholder="Buscar clientes..." aria-label="Search"
             formControlName="query">
     </form>
-    <div *ngIf="filteredClients$ | async as clients" class="clients__cards">
-        <app-client-card *ngFor="let client of clients?.data" [clientData]="client"
+    <div *ngIf="(filteredClients$ | async)?.data?.length; else notFound" class="clients__cards">
+        <app-client-card *ngFor="let client of (filteredClients$ | async)?.data" [clientData]="client"
             (deleteClient)="onDeleteClient($event)" (payRate)="onPayClientRate($event)"></app-client-card>
     </div>
 </div>
 <router-outlet></router-outlet>
+
+<ng-template #notFound>
+    <img src="../../../assets/img/not-found.png" alt="Logo" class="mx-auto d-block img-fluid"
+        style="max-height: 500px;">
+    <span class="text-center" style="font-size: 1.25em; color: gray; font-weight: bold;">No se encontraron
+        clientes</span>
+</ng-template>
