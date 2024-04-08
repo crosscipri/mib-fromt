@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { AppRoutingModule } from './app-routing.module';
@@ -9,6 +9,10 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+
+registerLocaleData(localeEs);
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -23,6 +27,7 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'es' },
   ],
   bootstrap: [AppComponent],
 })
