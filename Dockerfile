@@ -4,6 +4,6 @@ FROM nginx:latest
 # default location
 COPY nginx.conf /etc/nginx/nginx.conf
 # copy the built Angular app files to the default nginx html directory
-COPY /dist/nginx-example-app /usr/share/nginx/html
+COPY /dist/mib-front /usr/share/nginx/html
 
 # the paths are relative from the Docker file
