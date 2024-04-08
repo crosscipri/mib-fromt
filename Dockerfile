@@ -26,6 +26,3 @@ COPY --from=build /usr/local/app/dist/mib-front /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
-
-# Generate the build of the application
-RUN npm run start
