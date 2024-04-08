@@ -1,0 +1,1 @@
+import{K as o,N as i,kb as n}from"./chunk-TI73ILXT.js";var f=(()=>{let t=class t{constructor(r){this.router=r}canActivate(){return localStorage.getItem("idToken")?!0:(this.router.navigate(["/login"]),!1)}};t.\u0275fac=function(a){return new(a||t)(i(n))},t.\u0275prov=o({token:t,factory:t.\u0275fac,providedIn:"root"});let e=t;return e})();export{f as a};
