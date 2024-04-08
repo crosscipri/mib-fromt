@@ -10,7 +10,7 @@ WORKDIR /usr/local/app
 COPY ./ /usr/local/app/
 
 # Install all the dependencies
-RUN npm install --legaly-peer-deeps
+RUN npm install --legacy-peer-deeps
 
 # Generate the build of the application
 RUN npm run build
