@@ -25,4 +25,4 @@ RUN npm run build
 #COPY --from=build /usr/local/app/dist/mib-front /usr/share/nginx/html
 
 # Expose port 80
-3EXPOSE 80
+#EXPOSE 80
