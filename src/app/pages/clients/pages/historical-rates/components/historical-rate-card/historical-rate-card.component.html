@@ -1,0 +1,41 @@
+<div *ngIf="rate" class="card">
+    <div class="card__container">
+        <div class="card__container__rates">
+            <div class="card__container__rates__info">
+                <span class="card__container__rates__info__name">{{rate.rate.name}} ({{rate.rate.price ?? '-'}}€)</span>
+            </div>
+            <div class="card__container__rates__status">
+                <span [ngClass]="{'pending-payments': !rate.paid }">
+                    {{!rate.paid ? 'Pagos pend.' : ''}}
+                </span>
+            </div>
+
+        </div>
+        <div class="card__container__rate">
+            <div class="card__container__rate__description">
+                {{rate.rate.description ?? '-'}}
+            </div>
+            <div class="card__container__rate__data">
+                <span class="card__container__rate__data__coach pt-2">
+                    <i class="bi bi-calendar-range"></i> {{rate.rate.durationUnit === 'Month' ? 'Tarifa mensual' :
+                    'Tarifa
+                    día'}}
+                </span>
+                <span class="card__container__rate__data__date pt-2">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                    {{rate.rate.duration ?? '-'}} {{rate.rate.duration > 1 ? (rate.rate.durationUnit === 'Month' ?
+                    'Meses' : 'Días') :
+                    (rate.rate.durationUnit === 'Month' ? 'Mes' : 'Día')}}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="card__actions">
+        <div data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-three-dots-vertical"></i>
+        </div>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item">Pagar tarifa</a></li>
+        </ul>
+    </div>
+</div>

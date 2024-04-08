@@ -1,1 +1,19 @@
-<p>historical-rates works!</p>
+<div class="historical-rates">
+    <h1 class="historical-rates__title">Histórico de tarifas</h1>
+    <div class="historical-rates__cards " *ngIf="historicRates$ | async as historicalRates">
+        <div class="mx-3 mb-3"><strong>Cliente:</strong> {{historicalRates.data.client.name}}
+            {{historicalRates.data.client.firstLastName}}
+            {{historicalRates.data.client.secondLastName}}</div>
+        <div *ngIf="historicalRates.data.historic.length; else notFound">
+            <app-historical-rate-card *ngFor="let rate of historicalRates?.data?.historic"
+                [rate]="rate"></app-historical-rate-card>
+        </div>
+    </div>
+</div>
+
+<ng-template #notFound>
+    <img src="../../../assets/img/empty-rates.jpg" alt="Logo" class="mx-auto d-block img-fluid"
+        style="max-height: 500px;">
+    <span class="text-center" style="font-size: 1rem; color: gray; align-self: center;">Este cliente no tiene tarifas
+        asignadas</span>
+</ng-template>

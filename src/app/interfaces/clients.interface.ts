@@ -74,3 +74,22 @@ export interface PayRate {
   rateId: number;
   paymentDate: string;
 }
+
+export interface HistoricalRatesResponse {
+  data: HistoricalRate;
+  message: string;
+}
+
+export interface HistoricalRate {
+  client: Client;
+  historic: HistoricRateData[];
+}
+
+export interface HistoricRateData {
+  id: number;
+  rate: Rate;
+  startDate: string;
+  endDate: string;
+  paymentDate: string;
+  paid: boolean;
+}
