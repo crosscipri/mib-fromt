@@ -1,1 +1,0 @@
-import{K as i,h as c}from"./chunk-TI73ILXT.js";var s=(()=>{let t=class t{constructor(){this.alertSubject=new c}show(e,r){this.alertSubject.next({message:e,type:r})}};t.\u0275fac=function(r){return new(r||t)},t.\u0275prov=i({token:t,factory:t.\u0275fac,providedIn:"root"});let o=t;return o})();export{s as a};

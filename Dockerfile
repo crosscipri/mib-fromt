@@ -1,9 +1,9 @@
-# use the latest version of the official nginx image as the base image
-FROM nginx:latest
-# copy the custom nginx configuration file to the container in the
-# default location
-COPY nginx.conf /etc/nginx/nginx.conf
-# copy the built Angular app files to the default nginx html directory
-COPY /dist/nginx-example-app /usr/share/nginx/html
-
-# the paths are relative from the Docker file
+FROM node:18.17.1-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+RUN npx ngcc --properties es2023 browser module main --first-only --create-ivy-entry-points
+COPY . .
+RUN npm run build
+FROM nginx:stable
+COPY --from=build /app/dist/mibfront /usr/share/nginx/html
