@@ -6,4 +6,4 @@ RUN npx ngcc --properties es2023 browser module main --first-only --create-ivy-e
 COPY . .
 RUN npm run build
 FROM nginx:stable
-COPY --from=build /app/dist/mibfront /usr/share/nginx/html
+COPY --from=build /app/dist/mibfront/browser /usr/share/nginx/html
