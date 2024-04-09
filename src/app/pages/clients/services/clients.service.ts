@@ -10,6 +10,7 @@ import {
   ClientRequestDto,
   ClientResponse,
   ClientsResponse,
+  HistoricalRatesResponse,
   UpdateClientResponse,
 } from '../../../interfaces/clients.interface';
 import {
@@ -90,5 +91,9 @@ export class ClientsService extends ApiHttpService {
     return this.post(`${this.baseUrl}/${clientId}/clientRate/${rateId}/pay`, {
       paymentDate,
     });
+  }
+
+  historicalRates(clientId: number): Observable<HistoricalRatesResponse> {
+    return this.get(`${this.baseUrl}/${clientId}/historic`);
   }
 }

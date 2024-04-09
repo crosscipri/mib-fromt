@@ -1,0 +1,52 @@
+<div *ngIf="rate" class="card" [ngClass]="{'pending-payments-card': !rate.paid}">
+    <div class="card__container">
+        <div class="card__container__rates">
+            <div class="card__container__rates__info">
+                <span class="card__container__rates__info__name d-flex">
+                    <span class="ellipsis me-1">{{rate.rate.name}}</span> ({{rate.rate.price ?? '-'}}€)
+                </span>
+            </div>
+            <div class="card__container__rates__status">
+                <span [ngClass]="{'pending-payments': !rate.paid, 'active': rate.paid }">
+                    <i *ngIf="rate.paid && rate.paymentDate" class="bi bi-cash-coin"></i>
+                    {{!rate.paid ? 'Pagos pend.' : (rate.paymentDate | date:'dd MMM. yyyy')}}
+                </span>
+            </div>
+
+        </div>
+        <div class="card__container__rate">
+            <div class="card__container__rate__data">
+                <div>
+                    <span class="card__container__rate__data__coach pt-2">
+                        Duración:
+                    </span>
+                    <span class="card__container__rate__data__date pt-2">
+                        {{rate.rate.duration > 1 ? (rate.rate.durationUnit === 'Month' ? '(' + rate.rate.duration + '
+                        Meses)' : '(' + rate.rate.duration + ' Días)') :
+                        (rate.rate.durationUnit === 'Month' ? '(' + rate.rate.duration + ' Mes)' : '(' +
+                        rate.rate.duration
+                        + ' Día)')}}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="card__container__rate">
+            <div class="card__container__rate__data">
+                <span class="card__container__rate__data__date pt-2" *ngIf="rate.startDate">
+                    <i class="bi bi-calendar-event"></i> {{rate.startDate | date:'dd MMM. yyyy'}}
+                </span>
+                <span class="card__container__rate__data__date pt-2" *ngIf="rate.endDate">
+                    <i class=" bi bi-calendar-x"></i> {{rate.endDate | date:'dd MMM. yyyy'}}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="card__actions" *ngIf="!rate.paid">
+        <div data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-three-dots-vertical"></i>
+        </div>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" (click)="openPaymentRateModal(rate.id)">Pagar tarifa</a></li>
+        </ul>
+    </div>
+</div>
