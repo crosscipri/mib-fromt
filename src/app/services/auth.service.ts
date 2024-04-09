@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService extends ApiHttpService {
-  baseUrl = `/api/auth`;
+  baseUrl = `${environment.apiUrl}/api/auth`;
 
   constructor(
     http: HttpClient,

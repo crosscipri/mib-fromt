@@ -45,6 +45,12 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -70,17 +76,16 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mibfront:build",
+            "browserTarget": "mib-front:build",
             "proxyConfig": "proxy-local.config.js"
           },
           "configurations": {
-            "production": {
-              "buildTarget": "mib-front:build:production",
-              "proxyConfig": "src/proxy-prod.config.js"
-            },
             "development": {
               "buildTarget": "mib-front:build:development",
               "proxyConfig": "src/proxy-local.config.js"
+            },
+            "production": {
+              "browserTarget": "mib-front:build:production"
             }
           },
           "defaultConfiguration": "development"

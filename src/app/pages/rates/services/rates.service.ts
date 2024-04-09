@@ -13,7 +13,7 @@ import {
   providedIn: 'root',
 })
 export class RatesService extends ApiHttpService {
-  baseUrl = '/api/rates';
+  baseUrl = `${environment.apiUrl}/api/rates`;
 
   constructor(http: HttpClient) {
     super(http);

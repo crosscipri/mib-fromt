@@ -24,7 +24,7 @@ import { TrainersResponse } from '../../../interfaces/trainer.interface';
   providedIn: 'root',
 })
 export class ClientsService extends ApiHttpService {
-  baseUrl = '/api/clients';
+  baseUrl = `${environment.apiUrl}/api/clients`;
 
   constructor(http: HttpClient) {
     super(http);
