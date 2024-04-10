@@ -4,7 +4,6 @@ import { ClientCardComponent } from './client-card.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CreateClientsRoutingModule } from '../../pages/create-clients/create-clients-routing.module';
 import { AssignRateModalModule } from '../assign-rate-modal/assign-rate-modal.module';
 import { DeleteModalModule } from '../../../../components/delete-modal/delete-modal.module';
 import { PayRateModalModule } from '../pay-rate-modal/pay-rate-modal.module';

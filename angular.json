@@ -83,8 +83,7 @@
           },
           "configurations": {
             "development": {
-              "buildTarget": "mib-front:build:development",
-              "proxyConfig": "src/proxy-local.config.js"
+              "buildTarget": "mib-front:build:development"
             },
             "production": {
               "browserTarget": "mib-front:build:production"

@@ -15,6 +15,8 @@ export class ClientsComponent {
   filteredClients$: Observable<ClientsResponse>;
   searchQuery: string = '';
   searchForm: FormGroup;
+  activeStatus = 'active';
+
   constructor(
     private clientsService: ClientsService,
     private router: Router,
@@ -47,6 +49,29 @@ export class ClientsComponent {
         this.clients$ = this.clientsService.getClients();
         this.filteredClients$ = this.clients$;
       });
+  }
+
+  setActiveStatus(status: string) {
+    this.activeStatus = status;
+    if (status === 'active') {
+      this.filteredClients$.pipe(
+        map((response) => {
+          return {
+            ...response,
+            data: response.data.filter((client) => client.rate),
+          };
+        }),
+      );
+    } else {
+      this.filteredClients$.pipe(
+        map((response) => {
+          return {
+            ...response,
+            data: response.data.filter((client) => !client.rate),
+          };
+        }),
+      );
+    }
   }
 
   onSearch(query: string) {

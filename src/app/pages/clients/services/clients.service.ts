@@ -73,7 +73,7 @@ export class ClientsService extends ApiHttpService {
   }
 
   getTrainers(): Observable<TrainersResponse> {
-    return this.get(`/api/trainers`);
+    return this.get(`${environment.apiUrl}/api/trainers`);
   }
 
   assignRateToClient(

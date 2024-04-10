@@ -5,8 +5,8 @@
             {{historicalRates.data.client.firstLastName}}
             {{historicalRates.data.client.secondLastName}}</div>
         <div *ngIf="historicalRates.data.historic.length; else notFound">
-            <app-historical-rate-card *ngFor="let rate of historicalRates?.data?.historic"
-                [rate]="rate"></app-historical-rate-card>
+            <app-historical-rate-card *ngFor="let rate of historicalRates?.data?.historic" [clientId]="clientId ?? 0"
+                [rate]="rate" (payRate)="onPayClientRate($event)"></app-historical-rate-card>
         </div>
     </div>
 </div>

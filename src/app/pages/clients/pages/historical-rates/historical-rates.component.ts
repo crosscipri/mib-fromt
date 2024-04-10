@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { ClientsService } from '../../services/clients.service';
 import { ActivatedRoute } from '@angular/router';
-import { HistoricalRatesResponse } from '../../../../interfaces/clients.interface';
-import { Observable, of, switchMap } from 'rxjs';
+import {
+  HistoricalRatesResponse,
+  PayRate,
+} from '../../../../interfaces/clients.interface';
+import { Observable, first, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-historical-rates',
@@ -10,13 +13,13 @@ import { Observable, of, switchMap } from 'rxjs';
   styleUrl: './historical-rates.component.scss',
 })
 export class HistoricalRatesComponent {
-  clientId: string | null = null;
+  clientId: number | null = null;
   historicRates$: Observable<HistoricalRatesResponse | null> =
     this.route.paramMap.pipe(
       switchMap((params) => {
-        this.clientId = params.get('id');
+        this.clientId = Number(params.get('id'));
         if (this.clientId !== null) {
-          return this.clientsService.historicalRates(+this.clientId);
+          return this.clientsService.historicalRates(this.clientId);
         }
         return of(null);
       }),
@@ -26,4 +29,15 @@ export class HistoricalRatesComponent {
     private clientsService: ClientsService,
     private route: ActivatedRoute,
   ) {}
+
+  onPayClientRate(data: PayRate) {
+    this.clientsService
+      .payClientRate(data.clientId, data.rateId, data.paymentDate)
+      .pipe(first())
+      .subscribe(() => {
+        this.historicRates$ = this.clientsService.historicalRates(
+          this.clientId ?? 0,
+        );
+      });
+  }
 }
