@@ -1,0 +1,9 @@
+.dashboard {
+  height: 100vh;
+  overflow: scroll;
+  padding: 16px;
+
+  &__total-clients {
+    display: flex;
+  }
+}
