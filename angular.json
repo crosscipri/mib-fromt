@@ -78,8 +78,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mib-front:build",
-            "proxyConfig": "proxy-local.config.js"
+            "browserTarget": "mib-front:build"
           },
           "configurations": {
             "development": {
