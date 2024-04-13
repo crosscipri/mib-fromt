@@ -9,7 +9,7 @@
             <a class="nav-link" [ngClass]="{'active': activeStatus === 'active'}">Activos</a>
         </li>
         <li class="nav-item" (click)="setActiveStatus('inactive')">
-            <a class="nav-link" [ngClass]="{'active': activeStatus === 'inactive'}">Inactivos</a>
+            <a class="nav-link" [ngClass]="{'inactive': activeStatus === 'inactive'}">Inactivos</a>
         </li>
     </ul>
     <div *ngIf="(filteredClients$ | async)?.data?.length; else notFound" class="clients__cards">
