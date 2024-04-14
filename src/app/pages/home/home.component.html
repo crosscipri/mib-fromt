@@ -41,7 +41,7 @@
                     <strong>({{getDaysLeft(client.endDate)}} días)</strong>
                 </span>
             </div>
-            <button class="btn btn-warning">Ver cliente</button>
+            <button class="btn btn-warning" [routerLink]="['/clients', client.client.id]">Ver cliente</button>
         </div>
 
     </div>
@@ -52,7 +52,7 @@
                 <strong>{{client.client.name}} {{client.client.firstLastName}} {{client.client.secondLastName}}</strong>
                 <span *ngIf="client.rate">{{client.rate.name}} ({{client.rate.price}}€)</span>
             </div>
-            <button class="btn btn-primary">Ver cliente</button>
+            <button class="btn btn-primary" [routerLink]="['/clients', client.client.id]">Ver cliente</button>
         </div>
     </div>
 </div>
