@@ -5,9 +5,9 @@
 <footer class="footer d-lg-none">
   <a href="home"><i class="bi bi-house"></i> <span>Inicio</span></a>
   <a href="clients/create"><i class="bi bi-person-plus"></i><span>Crear cliente</span></a>
-  <a href="clients"><i class="bi bi-person-lines-fill"></i><span>Clientes</span></a>
-  <a href="rates/create"><i class="bi bi-plus-circle"></i><span>Crear tarifa</span></a>
-  <a href="rates"><i class="bi bi-eye"></i><span> Tarifas</span></a>
+  <a href="clients"><i class="bi bi-person"></i><span>Clientes</span></a>
+  <a href="rates/create"><i class="bi bi-file-earmark-plus"></i><span>Crear tarifa</span></a>
+  <a href="rates"><i class="bi bi-file-earmark-text"></i><span> Tarifas</span></a>
 </footer>
 <alert *ngIf="alertSubject$ | async as alertData" [type]="alertData.type" [dismissible]="true" [dismissOnTimeout]="3000"
   style="width: 90%; position: fixed; top: 30px; left: 50%; transform: translateX(-50%); z-index: 9999;">
