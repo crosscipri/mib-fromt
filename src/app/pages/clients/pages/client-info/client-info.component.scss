@@ -1,7 +1,21 @@
 p {
 
-    i,
-    strong {
-        color: #0e3983;
-    }
+  i,
+  strong {
+    color: #0e3983;
+  }
+}
+
+.client-info {
+  height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  @media (min-height: 701px) and (max-height: 1000px) {
+    height: 87vh;
+  }
+
+  @media (max-height: 700px) {
+    height: 80vh;
+  }
 }
