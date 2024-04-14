@@ -1,40 +1,47 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">MIB Team</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="home">Inicio</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="clients" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Clientes
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="clients/create">Crear cliente</a></li>
-                        <li><a class="dropdown-item" href="clients">Ver clientes</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="rates" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Tarifas
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="rates/create">Crear tarifa</a></li>
-                        <li><a class="dropdown-item" href="rates">Ver tarifas</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" data-bs-toggle="modal"
-                        data-bs-target="#logout">Cerrar sesion</a>
-                </li>
-            </ul>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="navbarNavDropdown" style="width: 50%;"
+            aria-labelledby="offcanvasNavbarLabel" data-bs-backdrop="false">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="home">Inicio</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="clients" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Clientes
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="clients/create">Crear cliente</a></li>
+                            <li><a class="dropdown-item" href="clients">Ver clientes</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="rates" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Tarifas
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="rates/create">Crear tarifa</a></li>
+                            <li><a class="dropdown-item" href="rates">Ver tarifas</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item pt-4">
+                        <a class="nav-link active" aria-current="page" data-bs-toggle="modal"
+                            data-bs-target="#logout">Cerrar sesion</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
