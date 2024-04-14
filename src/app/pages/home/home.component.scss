@@ -1,6 +1,7 @@
 .dashboard {
-  height: 100%;
+  height: 92vh;
   padding: 16px;
+  overflow: auto;
 
   &__total-clients {
     display: flex;

@@ -31,7 +31,7 @@
         </div>
     </ng-container>
     <h3 class="pt-2">Finalizan en 14 días</h3>
-    <div *ngIf="clientsAboutToExpire$ | async as data" style="padding-top:4px; max-height: 35vh; overflow: auto;">
+    <div *ngIf="clientsAboutToExpire$ | async as data">
         <div *ngFor="let client of data.data" class="expired-client">
             <div class="expired-client__data">
                 <strong>{{client.client.name}} {{client.client.firstLastName}} {{client.client.secondLastName}}</strong>
@@ -43,10 +43,10 @@
             </div>
             <button class="btn btn-warning">Ver cliente</button>
         </div>
+
     </div>
     <h3 class="pt-2">Clientes con inpagos</h3>
-    <div *ngIf="unpaidClients$ | async as unpaidClient"
-        style="padding-top:4px; padding-bottom: 50px; max-height: 35vh; overflow: auto;">
+    <div *ngIf="unpaidClients$ | async as unpaidClient">
         <div *ngFor="let client of unpaidClient.data" class="unpaid-client">
             <div class="unpaid-client__data">
                 <strong>{{client.client.name}} {{client.client.firstLastName}} {{client.client.secondLastName}}</strong>
