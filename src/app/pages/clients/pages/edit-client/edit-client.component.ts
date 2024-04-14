@@ -10,7 +10,7 @@ import {
 import { ClientsService } from '../../services/clients.service';
 import { TrainersResponse } from '../../../../interfaces/trainer.interface';
 import { AlertService } from '../../../../services/alert.service';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-edit-client',
   templateUrl: './edit-client.component.html',
@@ -38,6 +38,7 @@ export class EditClientComponent implements OnInit {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private alertService: AlertService,
+    private location: Location,
   ) {
     this.clientForm = this.fb.group({
       name: [null, Validators.required],
@@ -56,6 +57,10 @@ export class EditClientComponent implements OnInit {
 
   ngOnInit() {
     this.setClientForm();
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   setClientForm() {

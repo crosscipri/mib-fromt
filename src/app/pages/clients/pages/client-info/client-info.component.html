@@ -1,5 +1,9 @@
 <div class="container overflow-auto" style="max-height: 90vh;">
-    <div class="row mt-4" *ngIf="client$ | async as client">
+    <div class="pt-2" style="color: rgb(118, 118, 118); cursor: pointer;" (click)="goBack()">
+        <span><i class="bi bi-arrow-left-circle"></i><strong> Volver</strong></span>
+    </div>
+
+    <div class="row mt-2" *ngIf="client$ | async as client">
         <div *ngIf="client.data.pendingPayments" class="alert alert-warning d-flex flex-column"
             style="width: 94%; margin: 12px; margin-right: 0;" role="alert">
             <span> Este cliente tiene pagos pendientes</span>

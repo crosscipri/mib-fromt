@@ -9,6 +9,7 @@ import { ClientsService } from '../../services/clients.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PayRateModalComponent } from '../../components/pay-rate-modal/pay-rate-modal.component';
 import { AssignRateModalComponent } from '../../components/assign-rate-modal/assign-rate-modal.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-client-info',
@@ -31,7 +32,12 @@ export class ClientInfoComponent {
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private cdr: ChangeDetectorRef,
+    private location: Location,
   ) {}
+
+  goBack() {
+    this.location.back();
+  }
 
   openAddingRateModal(clientId: number | undefined) {
     if (!clientId) {

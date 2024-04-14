@@ -6,6 +6,7 @@ import {
   PayRate,
 } from '../../../../interfaces/clients.interface';
 import { Observable, first, of, switchMap } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-historical-rates',
@@ -28,7 +29,12 @@ export class HistoricalRatesComponent {
   constructor(
     private clientsService: ClientsService,
     private route: ActivatedRoute,
+    private location: Location,
   ) {}
+
+  goBack() {
+    this.location.back();
+  }
 
   onPayClientRate(data: PayRate) {
     this.clientsService

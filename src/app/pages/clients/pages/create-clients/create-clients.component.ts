@@ -75,6 +75,8 @@ export class CreateClientsComponent {
         first(),
         tap((val) => this.alertService.show(val.message, 'success')),
       )
-      .subscribe();
+      .subscribe(() => {
+        this.clientForm.reset();
+      });
   }
 }
