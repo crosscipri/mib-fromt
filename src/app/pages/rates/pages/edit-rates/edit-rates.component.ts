@@ -8,6 +8,7 @@ import {
   RateResponse,
 } from '../../../../interfaces/rates.interface';
 import { AlertService } from '../../../../services/alert.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-rates',
@@ -34,6 +35,7 @@ export class EditRatesComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
     private alertService: AlertService,
+    private location: Location,
   ) {
     this.rateForm = this.fb.group({
       name: [null, Validators.required],
@@ -51,6 +53,10 @@ export class EditRatesComponent implements OnInit {
     });
     this.setRateData();
     this.cdr.detectChanges();
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   setRateData() {

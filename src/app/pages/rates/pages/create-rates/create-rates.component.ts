@@ -4,6 +4,7 @@ import { EMPTY, catchError, first, tap } from 'rxjs';
 import { RateRequestDto } from '../../../../interfaces/rates.interface';
 import { RatesService } from '../../services/rates.service';
 import { AlertService } from '../../../../services/alert.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-rates',
@@ -18,6 +19,7 @@ export class CreateRatesComponent implements OnInit {
     private ratesService: RatesService,
     private cdr: ChangeDetectorRef,
     private alertService: AlertService,
+    private location: Location,
   ) {
     this.rateForm = this.fb.group({
       name: [null, Validators.required],
@@ -34,6 +36,10 @@ export class CreateRatesComponent implements OnInit {
       this.durationUnit = value;
     });
     this.cdr.detectChanges();
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   onSubmit() {
@@ -60,6 +66,8 @@ export class CreateRatesComponent implements OnInit {
         first(),
         tap((value) => this.alertService.show(value.message, 'success')),
       )
-      .subscribe();
+      .subscribe(() => {
+        this.rateForm.reset();
+      });
   }
 }

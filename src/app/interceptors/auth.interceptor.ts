@@ -68,8 +68,8 @@ export class AuthInterceptor implements HttpInterceptor {
             return next.handle(this.addToken(request, token.idToken));
           }),
           catchError((error) => {
-            this.authService.logout();
             if (error.status !== 401) {
+              this.authService.logout();
               return throwError(error);
             } else {
               return EMPTY;
