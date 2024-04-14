@@ -6,8 +6,8 @@ import {
   HttpEvent,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { catchError, switchMap, filter, take } from 'rxjs/operators';
+import { Observable, throwError, BehaviorSubject, EMPTY } from 'rxjs';
+import { catchError, switchMap, filter, take, tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
@@ -65,12 +65,18 @@ export class AuthInterceptor implements HttpInterceptor {
           switchMap((token: any) => {
             this.isRefreshing = false;
             this.refreshTokenSubject.next(token.idToken);
-            location.reload();
             return next.handle(this.addToken(request, token.idToken));
           }),
           catchError((error) => {
             this.authService.logout();
-            return throwError(error);
+            if (error.status !== 401) {
+              return throwError(error);
+            } else {
+              return EMPTY;
+            }
+          }),
+          tap(() => {
+            location.reload();
           }),
         );
     } else {
