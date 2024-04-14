@@ -46,8 +46,6 @@ export class ClientCardComponent {
   rates$ = this.ratesService.getRates();
 
   assignRateForm: FormGroup;
-  alertMessage: string | null = null;
-  alertType: string = 'success';
   currentClientId!: number;
 
   constructor(
@@ -72,14 +70,7 @@ export class ClientCardComponent {
     }
     this.clientsService
       .assignRateToClient(clientId, this.assignRateForm.getRawValue())
-      .pipe(
-        first(),
-        tap(() => this.showSuccessMessage()),
-        catchError((error) => {
-          this.showErrorMessage(error.error.message);
-          return EMPTY;
-        }),
-      )
+      .pipe(first())
       .subscribe((value) => {
         this.clientData = value.data;
         this.cdr.markForCheck();
@@ -129,23 +120,5 @@ export class ClientCardComponent {
 
       this.payRate.emit(payRate);
     });
-  }
-
-  private showSuccessMessage(message: string = 'Cliente creado correctamente') {
-    this.alertMessage = message;
-    this.alertType = 'success';
-    this.hideMessageAfterDelay();
-  }
-
-  private showErrorMessage(
-    message: string = 'No se ha podido crear el cliente',
-  ) {
-    this.alertMessage = message;
-    this.alertType = 'danger';
-    this.hideMessageAfterDelay();
-  }
-
-  private hideMessageAfterDelay() {
-    setTimeout(() => (this.alertMessage = null), 3000);
   }
 }

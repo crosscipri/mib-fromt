@@ -15,6 +15,7 @@ export interface Client {
 
 export interface ClientData {
   client: Client;
+  paid: boolean;
   rate: Rate | null;
   endDate: string | null;
   startDate?: string | null;

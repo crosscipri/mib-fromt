@@ -1,8 +1,14 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of, switchMap } from 'rxjs';
-import { ClientResponse } from '../../../../interfaces/clients.interface';
+import {
+  ClientResponse,
+  PayRate,
+} from '../../../../interfaces/clients.interface';
 import { ClientsService } from '../../services/clients.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PayRateModalComponent } from '../../components/pay-rate-modal/pay-rate-modal.component';
+import { AssignRateModalComponent } from '../../components/assign-rate-modal/assign-rate-modal.component';
 
 @Component({
   selector: 'app-client-info',
@@ -23,5 +29,20 @@ export class ClientInfoComponent {
   constructor(
     private clientsService: ClientsService,
     private route: ActivatedRoute,
+    private modalService: NgbModal,
+    private cdr: ChangeDetectorRef,
   ) {}
+
+  openAddingRateModal(clientId: number | undefined) {
+    if (!clientId) {
+      return;
+    }
+
+    const modalRef = this.modalService.open(AssignRateModalComponent);
+    modalRef.componentInstance.clientId = clientId;
+    modalRef.dismissed.subscribe(() => {
+      this.client$ = this.clientsService.getClientById(clientId);
+      this.cdr.detectChanges();
+    });
+  }
 }

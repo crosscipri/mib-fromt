@@ -3,7 +3,7 @@
         <div *ngIf="client.data.pendingPayments" class="alert alert-warning d-flex flex-column"
             style="width: 94%; margin: 12px; margin-right: 0;" role="alert">
             <span> Este cliente tiene pagos pendientes</span>
-            <a [routerLink]="['/clients', client.data.client.id, 'historic']" class="alert-link">Ver histórico de
+            <a [routerLink]="['/clients/historic', client.data.client.id]" class="alert-link">Ver histórico de
                 tarifas</a>
         </div>
         <div class="col-12 col-md-6 mb-4 ">
@@ -24,7 +24,8 @@
         </div>
         <div class="col-12 col-md-6 mb-4" *ngIf="client.data.rate">
             <div class="card bg-light p-3 rounded">
-                <h2 class="mt-2 text-success"><i class="bi bi-cash-stack"></i> Tarifa activa</h2>
+                <h2 class="mt-2 text-success"><i class="bi bi-cash-stack"></i> Tarifa activa <strong class="text-danger"
+                        style="font-size: 16px;" *ngIf="!client.data.paid">(No pagada)</strong></h2>
                 <p><i class="bi bi-tags-fill"></i> {{client.data.rate.name}}</p>
                 <p><i class="bi bi-info-circle-fill"></i>
                     {{client.data.rate.description}}
@@ -40,7 +41,13 @@
                 <p><i class="bi bi-calendar-x-fill"></i> <strong> Fecha fin:</strong> {{client.data.endDate | date:
                     'dd/MM/yyyy'}}
                 </p>
+                <button class="btn btn-warning mt-2" style="color: white"
+                    (click)="openAddingRateModal(client.data.client.id)">Renovar tarifa</button>
             </div>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="!client.data.rate">
+            <button class="btn btn-warning" style="color: white; width: 100%;"
+                (click)="openAddingRateModal(client.data.client.id)">Asignar tarifa</button>
         </div>
     </div>
 </div>

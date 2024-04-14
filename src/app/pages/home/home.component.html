@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <h3 class="pt-2">Clientes por entrenador</h3>
+    <h3 class="pt-4">Clientes por entrenador</h3>
     <ng-container *ngIf="trainers.length > 0">
         <div *ngFor="let trainer of trainers; let i = index" class="progress mt-2" role="progressbar"
             aria-label="Default striped example" [attr.aria-valuenow]="trainer.clientsWithRate" aria-valuemin="0"
@@ -30,7 +30,7 @@
             </div>
         </div>
     </ng-container>
-    <h3 class="pt-2">Finalizan en 14 días</h3>
+    <h3 class="pt-4">Finalizan en 14 días</h3>
     <div *ngIf="clientsAboutToExpire$ | async as data">
         <div *ngFor="let client of data.data" class="expired-client">
             <div class="expired-client__data">
@@ -52,7 +52,7 @@
                 <strong>{{client.client.name}} {{client.client.firstLastName}} {{client.client.secondLastName}}</strong>
                 <span *ngIf="client.rate">{{client.rate.name}} ({{client.rate.price}}€)</span>
             </div>
-            <button class="btn btn-primary" [routerLink]="['/clients', client.client.id]">Ver cliente</button>
+            <button class="btn btn-primary" [routerLink]="['/clients/historic', client.client.id]">Pagar</button>
         </div>
     </div>
 </div>
