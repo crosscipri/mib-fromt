@@ -1,9 +1,59 @@
 .dashboard {
-  height: 100vh;
-  overflow: scroll;
+  height: 100%;
   padding: 16px;
 
   &__total-clients {
     display: flex;
+  }
+}
+
+
+.unpaid-client {
+  background-color: #f8d7da80;
+  color: #721c24;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 8px;
+  align-items: center;
+  border-radius: 10px;
+
+  &__data {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+  }
+
+  button {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+    padding: 8px;
+    max-height: 40px;
+  }
+}
+
+
+.expired-client {
+  background-color: #ffffc480;
+  color: #d4aa00;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 8px;
+  align-items: center;
+  border-radius: 10px;
+
+  &__data {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+  }
+
+  button {
+    border: none;
+    color: white;
+    padding: 8px;
+    max-height: 40px;
   }
 }

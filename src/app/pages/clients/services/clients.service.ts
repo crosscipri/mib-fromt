@@ -35,7 +35,6 @@ export class ClientsService extends ApiHttpService {
   }
 
   getClientById(clientId: number): Observable<ClientResponse> {
-    console.log('clientId', clientId);
     return this.get(`${this.baseUrl}/${clientId}`);
   }
 
@@ -95,5 +94,13 @@ export class ClientsService extends ApiHttpService {
 
   historicalRates(clientId: number): Observable<HistoricalRatesResponse> {
     return this.get(`${this.baseUrl}/${clientId}/historic`);
+  }
+
+  getUnpaidClients(): Observable<ClientsResponse> {
+    return this.get(`${environment.apiUrl}/api/clientRates/unpaid`);
+  }
+
+  getClientsAboutToExpire(): Observable<ClientsResponse> {
+    return this.get(`${environment.apiUrl}/api/clientRates/aboutToExpire`);
   }
 }

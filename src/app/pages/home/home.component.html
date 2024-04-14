@@ -1,5 +1,4 @@
 <div class="dashboard">
-
     <h3>Total de clientes</h3>
     <div class="progress-stacked" style="width: 100%; height: 30px;">
         <div class="progress" style="height: 30px;" role="progressbar" aria-label="Segment one"
@@ -31,5 +30,29 @@
             </div>
         </div>
     </ng-container>
-
+    <h3 class="pt-2">Finalizan en 14 días</h3>
+    <div *ngIf="clientsAboutToExpire$ | async as data" style="padding-top:4px; max-height: 35vh; overflow: auto;">
+        <div *ngFor="let client of data.data" class="expired-client">
+            <div class="expired-client__data">
+                <strong>{{client.client.name}} {{client.client.firstLastName}} {{client.client.secondLastName}}</strong>
+                <span *ngIf="client.rate">{{client.rate.name}} ({{client.rate.price}}€)</span>
+                <span *ngIf="client.endDate">
+                    <i class="bi bi-calendar-x"></i> {{client.endDate |date:'dd MMM. yyyy'}}
+                    <strong>({{getDaysLeft(client.endDate)}} días)</strong>
+                </span>
+            </div>
+            <button class="btn btn-warning">Ver cliente</button>
+        </div>
+    </div>
+    <h3 class="pt-2">Clientes con inpagos</h3>
+    <div *ngIf="unpaidClients$ | async as unpaidClient"
+        style="padding-top:4px; padding-bottom: 50px; max-height: 35vh; overflow: auto;">
+        <div *ngFor="let client of unpaidClient.data" class="unpaid-client">
+            <div class="unpaid-client__data">
+                <strong>{{client.client.name}} {{client.client.firstLastName}} {{client.client.secondLastName}}</strong>
+                <span *ngIf="client.rate">{{client.rate.name}} ({{client.rate.price}}€)</span>
+            </div>
+            <button class="btn btn-primary">Ver cliente</button>
+        </div>
+    </div>
 </div>

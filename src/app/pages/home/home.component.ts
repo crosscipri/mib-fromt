@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   ClientData,
+  ClientResponse,
   ClientsResponse,
 } from '../../interfaces/clients.interface';
 import { Observable, first } from 'rxjs';
@@ -19,11 +20,22 @@ export class HomeComponent implements OnInit {
   percentageActiveClients: number = 0;
   percentageTotalClients: number = 100;
   trainers: any[] = [];
+  unpaidClients$: Observable<ClientsResponse> =
+    this.clientsService.getUnpaidClients();
+  clientsAboutToExpire$: Observable<ClientsResponse> =
+    this.clientsService.getClientsAboutToExpire();
 
   constructor(private clientsService: ClientsService) {}
 
   ngOnInit() {
     this.getTrainers();
+    this.getClientsAboutToExpire();
+  }
+
+  getClientsAboutToExpire() {
+    this.clientsService.getClientsAboutToExpire().subscribe((clients) => {
+      console.log('about to expire', clients);
+    });
   }
 
   getClients() {
@@ -82,5 +94,13 @@ export class HomeComponent implements OnInit {
     });
 
     this.trainers.sort((a, b) => b.clientsWithRate - a.clientsWithRate);
+  }
+
+  getDaysLeft(date: string): number {
+    const endDate = new Date(date);
+    const now = new Date();
+    const diffInTime = endDate.getTime() - now.getTime();
+    const diffInDays = Math.ceil(diffInTime / (1000 * 60 * 60 * 24));
+    return diffInDays;
   }
 }
