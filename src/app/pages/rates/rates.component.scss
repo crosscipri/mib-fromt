@@ -13,7 +13,7 @@
   }
 
   @media (max-height: 700px) {
-    height: 78vh;
+    height: 80vh;
   }
 
 
@@ -29,6 +29,16 @@
     @media (min-width: 768px) {
       font-size: 2rem;
       width: 60%;
+    }
+  }
+
+  &__btn {
+    width: 90%;
+    padding-bottom: 16px;
+
+    .btn {
+      background-color: #39D1AC;
+      border: none;
     }
   }
 

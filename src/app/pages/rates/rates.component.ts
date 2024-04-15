@@ -23,6 +23,10 @@ export class RatesComponent {
     return this.router.url === '/rates';
   }
 
+  navTo() {
+    this.router.navigate(['/rates/create']);
+  }
+
   deleteRate(rateId: number) {
     console.log(rateId);
     this.ratesService
