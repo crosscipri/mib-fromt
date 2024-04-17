@@ -6,7 +6,7 @@ import {
   HttpEvent,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { EMPTY, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AlertService } from '../services/alert.service';
 
@@ -25,6 +25,9 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (error.error) {
           errorMsg = `Error: ${error.error.showMessage}`;
         } else {
+          if (error.status === 401) {
+            return EMPTY;
+          }
           errorMsg = `Error Code: ${error.status}, Message: ${error.message}`;
         }
         this.alertService.show(errorMsg, 'danger');
