@@ -9,3 +9,4 @@ RUN npm run build
 FROM nginx:stable
 COPY --from=build /app/src/certificates /usr/share/nginx
 COPY --from=build /app/dist/mibfront/browser /usr/share/nginx/html
+RUN ls /usr/share/nginx
