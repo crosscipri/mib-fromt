@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://172.18.0.3'
+  // pending to change when certificate ssl fixed -> apiUrl: 'https://207.180.235.56:8081',
+  apiUrl: 'http://207.180.235.56:8080'
 };
