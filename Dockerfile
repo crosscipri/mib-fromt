@@ -7,4 +7,6 @@ COPY . .
 RUN ls /app
 RUN npm run build
 FROM nginx:stable
+RUN mkdir /usr/share/nginx/certificates
+COPY --from=build /app/src/certificates /usr/share/nginx/certificates
 COPY --from=build /app/dist/mibfront/browser /usr/share/nginx/html
