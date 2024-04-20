@@ -4,9 +4,8 @@ COPY package*.json ./
 RUN npm install --force
 RUN npx ngcc --properties es2023 browser module main --first-only --create-ivy-entry-points
 COPY . .
-RUN ls /app
+RUN ls /app/certificates
 RUN npm run build
 FROM nginx:stable
-RUN mkdir /usr/share/nginx/certificates
 COPY --from=build /app/src/certificates /usr/share/nginx/certificates
 COPY --from=build /app/dist/mibfront/browser /usr/share/nginx/html
