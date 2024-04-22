@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ClientsService } from './services/clients.service';
 import {
   Observable,
@@ -28,6 +28,7 @@ export class ClientsComponent {
   constructor(
     private clientsService: ClientsService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {
     this.clients$ = this.clientsService.getClients().pipe(shareReplay(1));
     this.searchForm = new FormGroup({
@@ -51,6 +52,7 @@ export class ClientsComponent {
   onDeleteClient(clientId: number) {
     this.clientsService.deleteClient(clientId).subscribe(() => {
       this.clients$ = this.clientsService.getClients().pipe(shareReplay(1));
+      this.cdr.detectChanges();
     });
   }
 
@@ -73,6 +75,7 @@ export class ClientsComponent {
       .payClientRate(data.clientId, data.rateId, data.paymentDate)
       .subscribe(() => {
         this.clients$ = this.clientsService.getClients().pipe(shareReplay(1));
+        this.cdr.detectChanges();
       });
   }
 

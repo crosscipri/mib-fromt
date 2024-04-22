@@ -54,6 +54,7 @@ export class ClientCardComponent {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private modalService: NgbModal,
+    private location: Location,
   ) {
     this.assignRateForm = this.fb.group({
       rateId: [null, Validators.required],
@@ -86,7 +87,7 @@ export class ClientCardComponent {
     modalRef.componentInstance.clientId = clientId;
     modalRef.dismissed.subscribe((result) => {
       this.clientData = result.data;
-      this.cdr.detectChanges();
+      this.location.reload();
     });
   }
 
