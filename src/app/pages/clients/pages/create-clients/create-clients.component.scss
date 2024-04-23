@@ -10,9 +10,12 @@ button {
 }
 
 .create-clients {
+  padding-bottom: 60px;
   height: 86vh;
   overflow-y: auto;
   overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
 
   @media (min-height: 701px) and (max-height: 1000px) {
     height: 83vh;

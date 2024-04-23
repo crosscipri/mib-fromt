@@ -52,6 +52,7 @@ export class ClientsComponent {
   onDeleteClient(clientId: number) {
     this.clientsService.deleteClient(clientId).subscribe(() => {
       this.clients$ = this.clientsService.getClients().pipe(shareReplay(1));
+      this.filteredClients$ = this.clients$;
       this.cdr.detectChanges();
     });
   }
