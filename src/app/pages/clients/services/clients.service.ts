@@ -11,6 +11,7 @@ import {
   ClientResponse,
   ClientsResponse,
   HistoricalRatesResponse,
+  SuccessResponse,
   UpdateClientResponse,
 } from '../../../interfaces/clients.interface';
 import {
@@ -51,6 +52,13 @@ export class ClientsService extends ApiHttpService {
 
   deleteClient(clientId: number): Observable<ClientResponse> {
     return this.delete(`${this.baseUrl}/${clientId}`);
+  }
+
+  deleteHistoricalRate(
+    clientId: number,
+    clientRateId: number,
+  ): Observable<SuccessResponse> {
+    return this.delete(`${environment.apiUrl}/api/clientRates/${clientRateId}`);
   }
 
   createClientRate(

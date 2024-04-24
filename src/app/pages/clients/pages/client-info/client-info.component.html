@@ -50,6 +50,14 @@
             </div>
         </div>
         <div class="col-12 col-md-6" *ngIf="!client.data.rate">
+            <div style="text-align: center; padding-bottom: 16px;">
+                <img src="../../../assets/img/empty-rates.jpg" alt="Logo" class="mx-auto d-block img-fluid"
+                    style="max-height: 270px;">
+                <span class="text-center" style="font-size: 1rem; color: gray; align-self: center;">Este cliente no
+                    tiene
+                    tarifas
+                    asignadas</span>
+            </div>
             <button class="btn btn-warning" style="color: white; width: 100%;"
                 (click)="openAddingRateModal(client.data.client.id)">Asignar tarifa</button>
         </div>

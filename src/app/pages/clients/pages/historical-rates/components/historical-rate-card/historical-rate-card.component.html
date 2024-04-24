@@ -41,12 +41,14 @@
             </div>
         </div>
     </div>
-    <div class="card__actions" *ngIf="!rate.paid">
+    <div class="card__actions">
         <div data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px; margin: -20px">
             <i class="bi bi-three-dots-vertical"></i>
         </div>
         <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" (click)="openPaymentRateModal(rate.id)">Pagar tarifa</a></li>
+            <li><a class="dropdown-item" (click)="openDeleteModal(rate.id)">Eliminar tarifa</a></li>
+            <li *ngIf="!rate.paid"><a class="dropdown-item" (click)="openPaymentRateModal(rate.id)">Pagar tarifa</a>
+            </li>
         </ul>
     </div>
 </div>

@@ -25,12 +25,12 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (error.error) {
           errorMsg = `Error: ${error.error.showMessage}`;
         } else {
-          if (error.status === 401) {
-            return EMPTY;
-          }
           errorMsg = `Error Code: ${error.status}, Message: ${error.message}`;
+          if (error.status !== 401) {
+            this.alertService.show(errorMsg, 'danger');
+          }
         }
-        this.alertService.show(errorMsg, 'danger');
+
         return throwError(errorMsg);
       }),
     );
