@@ -68,11 +68,14 @@ export class AuthInterceptor implements HttpInterceptor {
             return next.handle(this.addToken(request, token.idToken));
           }),
           catchError((error) => {
-            if (error.status !== 401) {
+            if (
+              (error instanceof HttpErrorResponse && error.status === 401) ||
+              error.includes('401')
+            ) {
+              return EMPTY;
+            } else {
               this.authService.logout();
               return throwError(error);
-            } else {
-              return EMPTY;
             }
           }),
           tap(() => {

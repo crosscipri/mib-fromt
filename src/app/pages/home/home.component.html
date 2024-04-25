@@ -30,7 +30,7 @@
             </div>
         </div>
     </ng-container>
-    <h3 class="pt-4">Finalizan en 14 días</h3>
+    <h3 class="pt-4">Finalizan en 4 días</h3>
     <div *ngIf="clientsAboutToExpire$ | async as data">
         <div *ngIf="data.data.length > 0; else: emptyRates">
             <div *ngFor="let client of data.data" class="expired-client">
@@ -70,6 +70,6 @@
 
 <ng-template #emptyClients>
     <div class="empty-rates">
-        <span>No hay clientes que caduquen en los próximos 14 días</span>
+        <span>No hay clientes con impagos</span>
     </div>
 </ng-template>

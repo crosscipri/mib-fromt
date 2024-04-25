@@ -4,7 +4,19 @@
         <button class="btn btn-warning" style="color: white; width: 100%;" (click)="navTo()">Crear tarifa</button>
     </div>
     <div *ngIf="rates$ | async as rates" class="rates__cards">
-        <app-rate-card *ngFor="let rate of rates?.data" [rate]="rate" (deleteRate)="deleteRate($event)"></app-rate-card>
+        <ng-container *ngIf="rates?.data?.length; else notFound">
+            <app-rate-card *ngFor="let rate of rates?.data" [rate]="rate"
+                (deleteRate)="deleteRate($event)"></app-rate-card>
+        </ng-container>
     </div>
 </div>
 <router-outlet></router-outlet>
+
+<ng-template #notFound>
+    <div style="text-align: center;">
+        <img src="../../../assets/img/not-found.png" alt="Logo" class="mx-auto d-block img-fluid"
+            style="max-height: 500px;">
+        <span class="text-center" style="font-size: 1.25em; color: gray; font-weight: bold;">No se encontraron
+            tarfifas</span>
+    </div>
+</ng-template>

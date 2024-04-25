@@ -6,6 +6,7 @@ import {
 } from '../../../../../../interfaces/clients.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PayRateModalComponent } from '../../../../components/pay-rate-modal/pay-rate-modal.component';
+import { DeleteModalComponent } from '../../../../../../components/delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-historical-rate-card',
@@ -14,6 +15,8 @@ import { PayRateModalComponent } from '../../../../components/pay-rate-modal/pay
 })
 export class HistoricalRateCardComponent {
   @Output() payRate: EventEmitter<PayRate> = new EventEmitter<PayRate>();
+  @Output() deleteRate: EventEmitter<{ clientId: number; rateId: number }> =
+    new EventEmitter<{ clientId: number; rateId: number }>();
   @Input() rate!: HistoricRateData;
   @Input() clientId!: number;
 
@@ -22,7 +25,6 @@ export class HistoricalRateCardComponent {
   openPaymentRateModal(clientRateId: number) {
     const modalRef = this.modalService.open(PayRateModalComponent);
     modalRef.closed.subscribe((val) => {
-      console.log(val);
       if (!val) {
         return;
       }
@@ -34,6 +36,19 @@ export class HistoricalRateCardComponent {
       };
 
       this.payRate.emit(payRate);
+    });
+  }
+
+  openDeleteModal(clientRateId: number) {
+    const modalRef = this.modalService.open(DeleteModalComponent);
+    modalRef.componentInstance.message = 'la tarifa seleccionada';
+    modalRef.componentInstance.text = 'tarifa';
+    modalRef.closed.subscribe((val) => {
+      console.log(val);
+      if (!val) {
+        return;
+      }
+      this.deleteRate.emit({ clientId: this.clientId, rateId: clientRateId });
     });
   }
 }

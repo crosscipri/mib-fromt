@@ -20,6 +20,7 @@ import { AssignRateModalComponent } from '../assign-rate-modal/assign-rate-modal
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteModalComponent } from '../../../../components/delete-modal/delete-modal.component';
 import { PayRateModalComponent } from '../pay-rate-modal/pay-rate-modal.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-client-card',
@@ -54,6 +55,7 @@ export class ClientCardComponent {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private modalService: NgbModal,
+    private location: Location,
   ) {
     this.assignRateForm = this.fb.group({
       rateId: [null, Validators.required],
@@ -85,8 +87,11 @@ export class ClientCardComponent {
     const modalRef = this.modalService.open(AssignRateModalComponent);
     modalRef.componentInstance.clientId = clientId;
     modalRef.dismissed.subscribe((result) => {
+      if (!result) {
+        return;
+      }
       this.clientData = result.data;
-      this.cdr.detectChanges();
+      location.reload();
     });
   }
 

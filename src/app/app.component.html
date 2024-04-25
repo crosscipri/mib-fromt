@@ -2,7 +2,7 @@
 <main>
   <router-outlet></router-outlet>
 </main>
-<footer class="footer d-lg-none">
+<footer *ngIf="!isLoginPage()" class="footer d-lg-none">
   <a href="home"><i class="bi bi-house"></i> <span>Inicio</span></a>
   <a href="clients/create"><i class="bi bi-person-plus"></i><span>Crear cliente</span></a>
   <a href="clients"><i class="bi bi-person"></i><span>Clientes</span></a>

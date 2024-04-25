@@ -63,6 +63,11 @@ export interface ClientRateResponse {
   message: string;
 }
 
+export interface SuccessResponse {
+  showMessage: string;
+  message: string;
+}
+
 export interface AssignRateToClientDto {
   rateId: number;
   startDate: string;

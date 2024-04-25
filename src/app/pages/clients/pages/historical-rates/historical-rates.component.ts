@@ -46,4 +46,15 @@ export class HistoricalRatesComponent {
         );
       });
   }
+
+  onDeleteRate(data: { clientId: number; rateId: number }) {
+    this.clientsService
+      .deleteHistoricalRate(data.clientId, data.rateId)
+      .pipe(first())
+      .subscribe(() => {
+        this.historicRates$ = this.clientsService.historicalRates(
+          this.clientId ?? 0,
+        );
+      });
+  }
 }

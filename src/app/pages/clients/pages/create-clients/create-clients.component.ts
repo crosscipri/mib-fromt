@@ -5,6 +5,7 @@ import { EMPTY, Observable, catchError, first, tap } from 'rxjs';
 import { ClientsService } from '../../services/clients.service';
 import { ClientRequestDto } from '../../../../interfaces/clients.interface';
 import { AlertService } from '../../../../services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-clients',
@@ -20,6 +21,7 @@ export class CreateClientsComponent {
     private fb: FormBuilder,
     private clientsService: ClientsService,
     private alertService: AlertService,
+    private router: Router,
   ) {
     this.clientForm = this.fb.group({
       name: [null, Validators.required],
@@ -76,7 +78,7 @@ export class CreateClientsComponent {
         tap((val) => this.alertService.show(val.message, 'success')),
       )
       .subscribe(() => {
-        this.clientForm.reset();
+        this.router.navigate(['/clients']);
       });
   }
 }
