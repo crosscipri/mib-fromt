@@ -29,3 +29,8 @@
         </div>
     </div>
 </div>
+
+<alert *ngIf="alertSubject$ | async as alertData" [type]="alertData.type" [dismissible]="true" [dismissOnTimeout]="3000"
+    style="width: 90%; position: fixed; top: 30px; left: 50%; transform: translateX(-50%); z-index: 9999;">
+    {{ alertData.message}}
+</alert>

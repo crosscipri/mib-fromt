@@ -21,16 +21,15 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMsg = '';
-        console.log(error);
         if (error.error) {
           errorMsg = `Error: ${error.error.showMessage}`;
         } else {
           errorMsg = `Error Code: ${error.status}, Message: ${error.message}`;
-          if (error.status !== 401) {
-            this.alertService.show(errorMsg, 'danger');
-          }
         }
 
+        if (error.status !== 401) {
+          this.alertService.show(errorMsg, 'danger');
+        }
         return throwError(errorMsg);
       }),
     );

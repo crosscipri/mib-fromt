@@ -16,7 +16,7 @@
                 <p><i class="bi bi-card-list"></i> <strong> Nombre:</strong> {{client.data.client.name}}
                     {{client.data.client.firstLastName}} {{client.data.client.secondLastName}}</p>
                 <p><i class="bi bi-envelope-fill"></i> <strong> Email:</strong> {{client.data.client.email}}</p>
-                <p><i class="bi bi-telephone-fill"></i> <strong> Tel:</strong> {{client.data.client.phoneNumber}}
+                <p><i class="bi bi-telephone-fill"></i> <strong> Tel:</strong> {{client.data.client.phoneNumber || '-'}}
                 </p>
                 <p><i class="bi bi-calendar3"></i> <strong> Fecha de Nacimiento:</strong>
                     {{client.data.client.birthDate | date: 'dd/MM/yyyy'}}</p>
@@ -32,7 +32,7 @@
                         style="font-size: 16px;" *ngIf="!client.data.paid">(No pagada)</strong></h2>
                 <p><i class="bi bi-tags-fill"></i> {{client.data.rate.name}}</p>
                 <p><i class="bi bi-info-circle-fill"></i>
-                    {{client.data.rate.description}}
+                    {{client.data.rate.description || '-'}}
                 </p>
                 <p><i class="bi bi-cash-coin"></i> <strong> Precio:</strong> {{client.data.rate.price}}€</p>
                 <p><i class="bi bi-clock-fill"></i> <strong> Duración:</strong> {{client.data.rate.duration}}

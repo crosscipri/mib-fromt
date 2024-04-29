@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { first } from 'rxjs';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -10,10 +11,12 @@ import { first } from 'rxjs';
 })
 export class LoginComponent {
   form: FormGroup;
+  alertSubject$ = this.alertService.alertSubject;
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private alertService: AlertService,
   ) {
     this.form = this.formBuilder.group({
       email: ['', Validators.required],
