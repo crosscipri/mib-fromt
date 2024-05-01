@@ -43,7 +43,8 @@
   &__cards {
     width: 100%;
     min-height: 400px;
-    overflow: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding-bottom: 60px;
     padding-top: 16px;
 

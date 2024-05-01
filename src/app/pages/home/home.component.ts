@@ -97,7 +97,7 @@ export class HomeComponent implements OnInit {
   }
 
   getDaysLeft(date: string): number {
-    const endDate = new Date(date);
+    const endDate = new Date(Date.parse(date));
     const now = new Date();
     const diffInTime = endDate.getTime() - now.getTime();
     const diffInDays = Math.ceil(diffInTime / (1000 * 60 * 60 * 24));
