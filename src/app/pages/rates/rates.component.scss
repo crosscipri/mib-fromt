@@ -44,7 +44,8 @@
 
   &__cards {
     width: 90%;
-    overflow: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding-bottom: 60px;
 
     @media (min-width: 768px) {
