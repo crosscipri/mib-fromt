@@ -58,7 +58,6 @@ export class ClientsComponent {
   }
 
   setActiveStatus(status: string) {
-    console.log(status);
     this.activeStatus = status;
     this.searchForm.get('query')?.setValue('');
     this.filteredClients$ = combineLatest([

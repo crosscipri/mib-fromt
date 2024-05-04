@@ -44,7 +44,6 @@ export class HistoricalRateCardComponent {
     modalRef.componentInstance.message = 'la tarifa seleccionada';
     modalRef.componentInstance.text = 'tarifa';
     modalRef.closed.subscribe((val) => {
-      console.log(val);
       if (!val) {
         return;
       }

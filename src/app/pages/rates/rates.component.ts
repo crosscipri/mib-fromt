@@ -28,7 +28,6 @@ export class RatesComponent {
   }
 
   deleteRate(rateId: number) {
-    console.log(rateId);
     this.ratesService
       .deleteRate(rateId)
       .pipe(

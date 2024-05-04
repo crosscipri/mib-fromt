@@ -29,13 +29,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getTrainers();
-    this.getClientsAboutToExpire();
-  }
-
-  getClientsAboutToExpire() {
-    this.clientsService.getClientsAboutToExpire().subscribe((clients) => {
-      console.log('about to expire', clients);
-    });
   }
 
   getClients() {

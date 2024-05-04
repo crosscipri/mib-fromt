@@ -28,7 +28,6 @@ export class RateCardComponent {
     modalRef.componentInstance.message = `la tarifa ${rate.name}`;
     modalRef.componentInstance.text = 'tarifa';
     modalRef.closed.subscribe((val) => {
-      console.log(val);
       if (!val) {
         return;
       }

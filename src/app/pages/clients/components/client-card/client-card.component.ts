@@ -34,7 +34,6 @@ export class ClientCardComponent {
 
   @Input()
   set clientData(clientData: ClientData | null) {
-    console.log('clientData', clientData);
     this.#clientData = clientData;
   }
 
@@ -101,7 +100,6 @@ export class ClientCardComponent {
     modalRef.componentInstance.message = 'al cliente';
     modalRef.componentInstance.text = 'cliente';
     modalRef.closed.subscribe((val) => {
-      console.log(val);
       if (!val) {
         return;
       }
@@ -112,7 +110,6 @@ export class ClientCardComponent {
   openPaymentRateModal(data: ClientData) {
     const modalRef = this.modalService.open(PayRateModalComponent);
     modalRef.closed.subscribe((val) => {
-      console.log(val);
       if (!val) {
         return;
       }
